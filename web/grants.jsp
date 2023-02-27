@@ -20,7 +20,7 @@
 
 	<!-- vendor css -->
 	<link rel="stylesheet" href="assets/css/style.css">
-	
+	 <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
 	
 
 </head>
@@ -68,9 +68,7 @@
 				<div class="row">
 				<div class="col-sm-12">
 				<div class="card">
-					<div class="card-header">
-						<h5>Grants Information</h5>
-					</div>
+					
 					<div class="card-body">
 						<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 							<li class="nav-item">
@@ -88,60 +86,104 @@
                     <div class="card-header">
                        
                     </div>
-                    <div class="card-body">
+                    
 <!--                        <h5>Form controls</h5>-->
-                        <hr>
+                       
                         <div class="row">
-                            <div class="col-md-6">
-                                <form action="savegrants">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                    </div>
-                                    <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                    </div>
-                                    <button type="submit" class="btn  btn-primary">Submit</button>
-                                </form>
+                            <div class="col-md-12">
+                                <form action="savegrants" class=''>
+                                    
+						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Add Grants Information</b></h2>
+					
+                                    <div class="form-row">
+<div class='form-group col-md-4'>
+<label for='donor_name'><b>Donor Name <font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control' id='donor_name' name='donor_name'  placeholder='Enter Donor Name'/>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='donor_code'><b>Donar Code<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control' id='donor_code' name='donor_code'  placeholder='Enter Donar Code'/>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='prime_recipient'><b>Prime Recipient<font color='red'>*</font></b></label>
+<input value='Deloitte & Touche Limited' required="true" type='input' class='form-control' id='prime_recipient' name='prime_recipient'  placeholder='Enter Prime Recipient'/>
+</div>
+         </div>
+        <div class="form-row">
+                                    
+<div class='form-group col-md-4'>
+<label for='prime_award_number'><b>Prime Award Number<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control' id='prime_award_number' name='prime_award_number'  placeholder='Enter Prime Award Number'/>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='country_of_implementation'><b>Country of Implementation<font color='red'>*</font></b></label>
+<Select class='form-control' id='country_of_implementation' name='country_of_implementation'  >
+<option value='Kenya'>Kenya</option>
+<option value='Tanzania'>Tanzania</option>
+</select>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='implementation_startdate'><b>Implementation Start Date<font color='red'>*</font></b></label>
+<input  required="true" type='input' class='form-control tarehe_kitambo' id='implementation_startdate' name='implementation_startdate'  placeholder='Enter Implementation Start Date'/>
+</div>
+ 
+         </div>
+        <div class="form-row">            
+                                    
+<div class='form-group col-md-4'>
+<label for='implementation_enddate'><b>Implementation End Date<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control tarehe_kesho' id='implementation_enddate' name='implementation_enddate'  placeholder='Enter Implementation End Date'/>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='obligation_enddate'><b>Obligation End Date<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control tarehe_kesho' id='obligation_enddate' name='obligation_enddate'  placeholder='Enter Obligation End Date'/>
+</div>
+                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='costshare_obligation'><b>Cost Share Obligation<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control' id='costshare_obligation' name='costshare_obligation'  placeholder='Enter Cost Share Obligation'/>
+</div>
+         </div>
+        <div class="form-row">                                    
+                                    
+<div class='form-group col-md-4'>
+<label for='grant_amount'><b>Grant Amount<font color='red'>*</font></b></label>
+<input onkeypress='return numbers(event);' required="true" type='input' class='form-control' id='grant_amount' name='grant_amount'  placeholder='Enter Grant Amount'/>
+</div>
+          
+            
+            <div class='form-group col-md-4'>
+                <label for='submit_frm'><b>.</b></label>
+         <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
+            
+         </div>
+         </div>
+ </form>
                             </div>
-                            <div class="col-md-6">
-                                <form>
-                                    <div class="form-group">
-                                        <label>Text</label>
-                                        <input type="text" class="form-control" placeholder="Text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Example select</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Example textarea</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
-                                </form>
-                            </div>
+                         
                         </div>
-								</p>
-							</div>
-							<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 							
-                                                        Edit Form
-                                                        </div>
+							
+							
 							
 						</div>
 					</div>
+                                                    
+                                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+							
+                                                        Edit Form
+                                                        </div>
 				</div>
 			</div>
 					
@@ -162,6 +204,58 @@
     <script src="assets/js/pcoded.min.js"></script>
 
 
+   <script  src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script>
+    
+     function numbers(evt){
+var charCode=(evt.which) ? evt.which : event.keyCode;
+if(charCode > 31 && (charCode < 48 || charCode>57))
+return false;
+return true;
+}
 
+
+   $(".tarehe_kitambo").datepicker({
+    endDate: "now()",
+    clearBtn: true,
+    format: "yyyy-mm-dd"
+}).on('changeDate', function(ev){
+    $(this).datepicker('hide');
+//    var mk=$("#weekstart").val();
+////    var mk=addDays($("#weekstart").val(),6);
+//    //alert(mk);
+//    $("#weekend").val(mk);
+});
+
+
+
+      $(".tarehe").datepicker({
+    startDate: "2021-05-01",
+    endDate: "now()",
+    clearBtn: true,
+    format: "yyyy-mm-dd"
+}).on('changeDate', function(ev){
+    $(this).datepicker('hide');
+//    var mk=$("#weekstart").val();
+////    var mk=addDays($("#weekstart").val(),6);
+//    //alert(mk);
+//    $("#weekend").val(mk);
+});
+
+
+    $(".tarehe_kesho").datepicker({
+    startDate: "2021-05-01",
+    clearBtn: true,
+    format: "yyyy-mm-dd"
+}).on('changeDate', function(ev){
+    $(this).datepicker('hide');
+//    var mk=$("#weekstart").val();
+////    var mk=addDays($("#weekstart").val(),6);
+//    //alert(mk);
+//    $("#weekend").val(mk);
+});
+
+
+</script>    
 </body>
 </html>

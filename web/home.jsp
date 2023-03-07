@@ -89,7 +89,7 @@
 								<h5 class="card-title">Manage Solicitations</h5>
 								<p class="card-text">This is a module to capture data about various NOFOs that the activity may share publicly for interested parties to apply. Here you can add, edit or delete Solicitation details</p>
 								<br/>
-                                                                <a href="soliciation.jsp" class="btn  btn-primary">Manage Solicitation</a>
+                                                                <a href="solicitation.jsp" class="btn  btn-primary">Manage Solicitation</a>
 								
 							</div>
 						</div>

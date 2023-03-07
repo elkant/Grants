@@ -41,16 +41,16 @@ public class logout extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            HttpSession session=request.getSession(true);
+          
             dbConnweb conn = new dbConnweb();
        
           
             
-            
+              HttpSession session=request.getSession(true);
             
          if (session.getAttribute("kd_session") != null) {
              
-              HashMap<String,String> hm=new HashMap<>();
+              HashMap<String,String> hm=new HashMap<String,String>();
             
             hm=(HashMap<String, String>)session.getAttribute("kd_session");
             

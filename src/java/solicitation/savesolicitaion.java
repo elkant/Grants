@@ -3,28 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grants;
+package solicitation;
 
 import Ajax.AuditTrail;
+import General.copytemplates;
 import database.dbConnweb;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 20, // 20 MB 
+        maxFileSize = 1024 * 1024 * 500, // 500 MB
+        maxRequestSize = 1024 * 1024 * 500)
+
 /**
  *
  * @author Administrator
  */
-public class savegrants extends HttpServlet {
+public class savesolicitaion extends HttpServlet {
+    
+ 
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,24 +48,44 @@ public class savegrants extends HttpServlet {
 //        response.setContentType("text/html;charset=UTF-8");
         
         
+
+
  response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
 
         HttpSession ses= request.getSession(true);
         
                  String saveresponse="";
-        try  {
+        
             /* TODO output your page here. You may use following sample code. */
 
             dbConnweb conn = new dbConnweb();
-            String table = " grants.grants_infor ";
+            
+            copytemplates ct= new copytemplates();
+            
+            String table = " grants.solicitation_infor ";
 
             String mfl = "";
 
-            String[] dataelementsarr = {"grant_id","donor_name", "donor_code", "prime_recipient", "prime_award_number", "country_of_implementation", "implementation_startdate", "implementation_enddate", "obligation_enddate", "costshare_obligation", "grant_amount","mechanism_name"};
+            String[] dataelementsarr = {"table_id","grant_id","nofo_number","performance_start_date","performance_end_date","award_mechanism","date_of_issuance","submission_by_date","means_of_submission","attachment_name","attachment_location","user_id"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
-            ArrayList al = new ArrayList();
+        String filename="";
+        
+        if(request.getParameter("nofo_number")!=null)
+        {     
+            
+            filename=request.getParameter("nofo_number")+"_";
+            ct.uploadFile(request, filename,"Solicitation");
+        }
+            
+                      
+            
+            
+            
+            try  {
+            
+            
 
             //This section here saves every field in a div mode i.i every form fied has a row.
             //Any time you save data, First delete any existing data for that petient at the start of the operation.          
@@ -108,7 +136,7 @@ public class savegrants extends HttpServlet {
 //______________________________________________________________________________________
             if (conn.pst1.executeUpdate() == 1) {
                 out.println("Grants Data Saved Successfully");
-saveresponse="<font color=\"green\">Grants Data Saved Successfully</font>";
+saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>";
                 
 
                 if (ses.getAttribute("kd_session") != null) {
@@ -118,13 +146,13 @@ saveresponse="<font color=\"green\">Grants Data Saved Successfully</font>";
                     hm = (HashMap<String, String>) ses.getAttribute("kd_session");
 
                     AuditTrail ad = new AuditTrail();
-                    ad.addTrail(conn, hm, "Saved Prime Award Number Named"
-                            + " " + request.getParameter("prime_award_number"));
+                    ad.addTrail(conn, hm, "Saved Solicitaion Named"
+                            + " " + request.getParameter("nofo_number"));
 
                 }
 
             } else {
-saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>";
+               saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>";
                 out.println(" Data Not successfully saved ");
 
             }
@@ -147,13 +175,13 @@ saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>"
 
         } catch (SQLException ex) {
             
-            saveresponse="<font color=\"red\">Data Not successfully saved </font> "+ex;
-            Logger.getLogger(savegrants.class.getName()).log(Level.SEVERE, null, ex);
+            saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
+            Logger.getLogger(savesolicitaion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        ses.setAttribute("grants_response",saveresponse);
-        response.sendRedirect("grants.jsp");
+        ses.setAttribute("solicitation_response",saveresponse);
+        response.sendRedirect("solicitation.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -194,5 +222,9 @@ saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>"
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    
+    
+    
 
 }

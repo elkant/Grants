@@ -60,21 +60,19 @@
 	<div class="pcoded-content">
 		<!-- [ breadcrumb ] start -->
 		
-                <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
-		<div class="toast-header">
-									
-									
-									<small class="text-muted"></small>
-									<button type="button" class="m-l-5 mb-1 mt-1 close" data-dismiss="toast" aria-label="Close">
-										<span>&times;</span>
-									</button>
-		</div>
-								<div class="toast-body">
-									<p class='ujumbe'></p>
-								</div>
-		</div>
-                <p class='callalert' onclick="$('.toast-3s').toast('show')">.</p>
                 
+                <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
+<div class="toast-header">
+<small class="text-muted"></small>
+<button type="button" class="m-l-5 mb-1 mt-1 close" data-dismiss="toast" aria-label="Close">
+<span>&times;</span>
+</button>
+</div>
+<div class="toast-body"><p class='ujumbe'></p></div>
+</div>		
+		
+		
+<p class='callalert' onclick="$('.toast-3s').toast('show')">.</p>
                 
 		<!-- [ breadcrumb ] end -->
 		<!-- [ Main Content ] start -->
@@ -89,7 +87,7 @@
 					<div class="card-body">
 						<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Grants</a>
+								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Solicitation</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-uppercase" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View/Edit</a>
@@ -108,13 +106,22 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="savegrants" class=''>
+                                <form action="savesolicitaion" enctype="multipart/form-data" method="POST">
                                     
-						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Add Grants Information</b></h2>
+						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Add Solicitation </b></h2>
 					
                                     <div class="form-row">
                                         
                                         <%
+                                            String uid="unknown";
+               if (session.getAttribute("kd_session") != null) {
+             
+              HashMap<String,String> hm=new HashMap<String,String>();
+            
+            hm=(HashMap<String, String>)session.getAttribute("kd_session");
+            
+             uid=hm.get("userid");
+                                            }
                                         
                                         dataPulls dp= new dataPulls();
                                         
@@ -122,77 +129,77 @@
                                         
                                         %>
                                         
-                                        <input required="true" value="<%=dp.getRandNo(1,10000)%>" type='hidden' class='form-control' id='grant_id' name='grant_id'  placeholder='Enter id'/>
-<div class='form-group col-md-4'>
-<label for='donor_name'><b>Donor Name <font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control' id='donor_name' name='donor_name'  placeholder='Enter Donor Name'/>
+<input required="true" value="<%=dp.getRandNo(1,10000)%>" type='hidden' class='form-control' id='table_id' name='table_id'  placeholder='Enter id'/>
+<input required="true" value="<%=uid%>" type='hidden' class='form-control' id='user_id' name='user_id'  placeholder='User id'/>
+                 
+                                    
+             <div class='form-group col-md-4'>
+<label for='grant_id'><b>Grant Name<font color='red'>*</font></b></label>
+<select class='form-control' id='grant_id' name='grant_id'  >
+    
+    <option value=''>Select Grant</option>
+    </select>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='donor_code'><b>Donar Code<font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control' id='donor_code' name='donor_code'  placeholder='Enter Donar Code'/>
+<label for='nofo_number'><b>Nofo Number<font color='red'>*</font></b></label>
+<input type='input' class='form-control' id='nofo_number' name='nofo_number'  placeholder='Enter Nofo Number'/>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='prime_recipient'><b>Prime Recipient<font color='red'>*</font></b></label>
-<input value='Deloitte & Touche Limited' required="true" type='input' class='form-control' id='prime_recipient' name='prime_recipient'  placeholder='Enter Prime Recipient'/>
+<label for='performance_start_date'><b>Performance Start Date<font color='red'>*</font></b></label>
+<input type='input' class='form-control tarehe' id='performance_start_date' name='performance_start_date'  placeholder='Enter Performance Start Date'/>
 </div>
-         </div>
-        <div class="form-row">
-                                    
+
+            </div>
+        <div class="form-row"> 
+
 <div class='form-group col-md-4'>
-<label for='prime_award_number'><b>Prime Award Number<font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control' id='prime_award_number' name='prime_award_number'  placeholder='Enter Prime Award Number'/>
+<label for='performance_end_date'><b>Performance End Date<font color='red'>*</font></b></label>
+<input type='input' class='form-control tarehe_kesho' id='performance_end_date' name='performance_end_date'  placeholder='Enter Performance End Date'/>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='country_of_implementation'><b>Country of Implementation<font color='red'>*</font></b></label>
-<Select class='form-control' id='country_of_implementation' name='country_of_implementation'  >
-<option value='Kenya'>Kenya</option>
-<option value='Tanzania'>Tanzania</option>
-</select>
+<label for='date_of_issuance'><b>Date of Issuance<font color='red'>*</font></b></label>
+<input type='input' class='form-control tarehe' id='date_of_issuance' name='date_of_issuance'  placeholder='Enter Date of Issuance'/>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='implementation_startdate'><b>Implementation Start Date<font color='red'>*</font></b></label>
-<input  required="true" type='input' class='form-control tarehe_kitambo' id='implementation_startdate' name='implementation_startdate'  placeholder='Enter Implementation Start Date'/>
+<label for='submission_by_date'><b>Submission By Date<font color='red'>*</font></b></label>
+<input type='input' class='form-control tarehe_kesho' id='submission_by_date' name='submission_by_date'  placeholder='Enter Submission By Date'/>
 </div>
- 
-         </div>
-        <div class="form-row">            
-                                    
+  </div>
+        
+        <div class="form-row"> 
+
 <div class='form-group col-md-4'>
-<label for='implementation_enddate'><b>Implementation End Date<font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control tarehe_kesho' id='implementation_enddate' name='implementation_enddate'  placeholder='Enter Implementation End Date'/>
+<label for='means_of_submission'><b>Means of Submission<font color='red'>*</font></b></label>
+<select class='form-control' id='means_of_submission' name='means_of_submission'  >
+
+    
+    <option value=''>Select Means</option>
+    </select>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='obligation_enddate'><b>Obligation End Date<font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control tarehe_kesho' id='obligation_enddate' name='obligation_enddate'  placeholder='Enter Obligation End Date'/>
+<label for='attachment_name'><b>Documents Name(s)<font color='red'>*</font></b></label>
+<input type='input' class='form-control' id='attachment_name' name='attachment_name'  placeholder='Enter Documents Name(s)'/>
 </div>
-                                    
-                                    
+
+
 <div class='form-group col-md-4'>
-<label for='costshare_obligation'><b>Cost Share Obligation<font color='red'>*</font></b></label>
-<input required="true" type='input' class='form-control' id='costshare_obligation' name='costshare_obligation'  placeholder='Enter Cost Share Obligation'/>
+<label for='attachment_location'><b>Upload Documents<font color='red'>*</font></b></label>
+<input type='file' class='form-control' id='attachment_location' name='attachment_location'  placeholder='Enter Upload Documents'/>
 </div>
-         </div>
-        <div class="form-row">                                    
-                                    
-<div class='form-group col-md-4'>
-<label for='grant_amount'><b>Grant Amount <font color='orange'>(in US Dollars) </font><font color='red'>*</font></b></label>
-<input onkeypress='return numbers(event);' required="true" type='input' class='form-control' id='grant_amount' name='grant_amount'  placeholder='Enter Grant Amount'/>
-</div>
-            
-<div class='form-group col-md-4'>
-<label for='mechanism_name'><b>Mechanism Name<font color='red'>*</font></b></label>
-<input  required="true" type='input' class='form-control' id='mechanism_name' name='mechanism_name'  placeholder='Enter Mechanism Name'/>
-</div>
+                     
+                </div>
+        <div class="form-row">                       
+
           
             
             <div class='form-group col-md-4'>
@@ -200,22 +207,20 @@
          <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
             
          </div>
-            
          </div>
-<div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
-		<div class="toast-header">
-									
-									
-									<small class="text-muted"></small>
-									<button type="button" class="m-l-5 mb-1 mt-1 close" data-dismiss="toast" aria-label="Close">
-										<span>&times;</span>
-									</button>
-		</div>
-								<div class="toast-body">
-									<p  class='ujumbe'></p>
-								</div>
-		</div>
  </form>
+                 <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
+<div class="toast-header">
+<small class="text-muted"></small>
+<button type="button" class="m-l-5 mb-1 mt-1 close" data-dismiss="toast" aria-label="Close">
+<span>&times;</span>
+</button>
+</div>
+<div class="toast-body"><p class='ujumbe'></p></div>
+</div>	                       
+                                        
+                                        
+                                        
                             </div>
                          
                         </div>
@@ -257,20 +262,19 @@
     <script type="text/javascript" src="assets/js/datatables.min.js"></script>
     
     
-       <%if (session.getAttribute("grants_response") != null) { %>
+   <%if (session.getAttribute("solicitation_response") != null) { %>
                                 <script type="text/javascript"> 
                     
-                    var uju='<%=session.getAttribute("grants_response")%>';
+                    var uju='<%=session.getAttribute("solicitation_response")%>';
                     $('.ujumbe').html(uju);
                     $('.callalert').click();
                       
                     
                 </script> <%
-                session.removeAttribute("grants_response");
+                session.removeAttribute("solicitation_response");
                             }
 
                         %>
-    
     
 <script>
     
@@ -400,7 +404,7 @@ $("#"+elementtoappend).html(""+dt);
     
 }
     
-  loadEdits('searchtable','grants_infor','loadedits','vw_grants_infor','grant_id'); 
+  loadEdits('searchtable','solicitation_infor','loadedits','vw_solicit_infor','table_id'); 
   
   
   
@@ -410,7 +414,7 @@ $("#"+elementtoappend).html(""+dt);
     
     //once the edit form is clicked, the assumption is that the add section will be loaded
     $('#home-tab').click();
-    $('#home-tab').html("Edit Grants");
+    $('#home-tab').html("Edit Solicitation");
     
    
 //    console.log("_"+fc+"vs"+dt);
@@ -437,12 +441,18 @@ $("#"+elementtoappend).html(""+dt);
                         
                         const keys = Object.keys(data[0]);  
                         console.log(keys);
-for (const key in data[0]) {  
+for (const key in data[0]) 
+{  
     
     var ky=key;
     var vl=data[0][key];
     
-  $("#"+ky).val(vl);
+    
+    //don't include 
+    if(vl.indexOf(".")<0){
+     $("#"+ky).val(vl);
+ }
+  
 }
                     }  
 //});
@@ -467,6 +477,32 @@ for (const key in data[0]) {
 
   
   
+  
+  function loadSelectOptionsPerField(elemid,act,selval){
+    
+            //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                    dataType: 'html',  
+                    data:{act:act,                         
+                         loadmtrs_sel_val:selval},
+                    success: function(data) 
+                    {
+                        var dt = data;
+       
+          $("#"+elemid).html(dt);
+                        
+                    }});    
+         
+           
+   
+          
+    
+}
+    loadSelectOptionsPerField('means_of_submission','getsubmissionmeans','');       
+     loadSelectOptionsPerField('grant_id','getgrant',''); 
+      
 
 
 </script>    

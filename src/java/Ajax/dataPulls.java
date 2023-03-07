@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -61,34 +62,75 @@ public class dataPulls extends HttpServlet {
             String loadmtrs_sel_val="";
             String fm="";
             String table_docker="";
+            String tablepkid="";
+            String pkidval="";
+            String maintablename="";
+            String vwtable="";
             //loadmtrs_sel_val,act=loadmothers,fac
             
             if(request.getParameter("act")!=null){act=request.getParameter("act");}
             if(request.getParameter("fac")!=null){fac=request.getParameter("fac");}
+            if(request.getParameter("pkid")!=null){tablepkid=request.getParameter("pkid");}
+            if(request.getParameter("tablename")!=null){maintablename=request.getParameter("tablename");}
+            if(request.getParameter("vwtable")!=null){vwtable=request.getParameter("vwtable");}
+            if(request.getParameter("pkidval")!=null){pkidval=request.getParameter("pkidval");}
            
             if(request.getParameter("loadmtrs_sel_val")!=null){loadmtrs_sel_val=request.getParameter("loadmtrs_sel_val");}
             
             
-            if(act.equals("loadmothers")){out.println(buildoptsFromDbResultSet(conn,pullAddedMothers(conn, fac),loadmtrs_sel_val));}
+            if(act.equals("loadmothers")){out.println(buildoptsFromDbResultSet(pullAddedMothers(conn, fac),loadmtrs_sel_val));}
             
              if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
              if(request.getParameter("table_docker")!=null){table_docker=request.getParameter("table_docker");}
              
              //A table will load both headers and data values dynamically
-            if(act.equals("showedits"))
+            if(act.equals("loadedits"))
             {               
-                
-               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_pmtct_ovc_pull_all_editing_data_dynamically");
-
-                out.println(buildDataTable(conn,rs1,table_docker,fm));                                               
+             //The idea here is to load data from multiple datatables dynamically into a web view. We are working with an assumption that each table has a unique Primary key id called tablepkid. We also have an assumption that the main table where the data is saved might be different from the view . 
+               // For that reason we are sourcing for two tables/sources , 1 view for pulling preview data and a table which will be used as a destination
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select * from "+vwtable);
+                System.out.println("______Pulling Data from Grants");
+                out.println(buildDataTable(conn,rs1,table_docker,tablepkid,maintablename));                                               
     
             }
+            
+            
+            //get
+            if(act.equals("loadrecordx"))
+            {               
+             //The idea here is to load data from multiple datatables dynamically into a web view. We are working with an assumption that each table has a unique Primary key id called tablepkid. We also have an assumption that the main table where the data is saved might be different from the view . 
+               // For that reason we are sourcing for two tables/sources , 1 view for pulling preview data and a table which will be used as a destination
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select * from "+maintablename+" where "+tablepkid+"='"+pkidval+"' limit 1");
+                System.out.println("______Pulling Data from "+maintablename);
+                out.println(toJsonFormatDynamic(rs1));                                               
+    
+            }
+            
+            
+            
             if(act.equals("getCurency"))
             {               
                 
                ResultSet rs1=pullDataFromDbGivenQuery(conn,"select * from grants.opts_currency; ");
 
-                out.println(buildoptsFromDbResultSet(conn,rs1,""));                                               
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("getsubmissionmeans"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',submissionmeans) as rcd from grants.opts_submissionmeans where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            
+            if(act.equals("getgrant"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(grant_id,',',mechanism_name,' [',prime_award_number,'] ') as granti from grants.grants_infor");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
             }
             
@@ -220,48 +262,28 @@ return conn.rs;
 }
 
 
-public  String buildoptsFromDbResultSet(dbConnweb cn,ResultSet res, String selectedvalue){
+public  String buildoptsFromDbResultSet(ResultSet res, String selectedvalue){
 
     
      String finalopts="<option value=''>select option</option>";
         try {
             //this method gets data from db and converts it to jsonArray, the from JSON array, get the JSONObjects in place
             
-            JSONArray ja=new JSONArray();
-            
-            ja=toJsonFormatDynamic(res);
-            
-            
-                    
-            String opts="";     
-                    for(int h=0;h<ja.length();h++){
-                        JSONObject jo=ja.getJSONObject(h);
-                    for(int i = 0; i<jo.names().length(); i++){
-                    opts+=jo.get(jo.names().getString(i))+":";
-                    }
-                    }
-                    
-                    
-                    
-                   
-//Yes|Yes:No|No
-//System.out.println(""+opts);
+     
 
-String valkey[]=opts.split(":");
-            System.out.println("val_key_length:"+valkey.length);
-
-for(int s=0;s<valkey.length;s++){
+while(res.next()){
     
-    String valkey_in[]=valkey[s].split(",");
     
-    if(valkey[s].contains(",")){
+    String valkey_in[]=res.getString(1).split(",");
+    
+  
     String selected="";
     if(selectedvalue.equals(valkey_in[0])){selected="selected";}
     
     finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
+  
     
-    }
-}
+                             }
 
 
 
@@ -337,13 +359,13 @@ return jo2;
 
 
 
-public String buildDataTable(dbConnweb con, ResultSet res, String elementtoappend,String frm) throws SQLException{
+public String buildDataTable(dbConnweb con, ResultSet res, String elementtoappend,String tablecolid,String sourcetable) throws SQLException{
     
 String finaltbl="";
 String hdslist_html="";
-String dtlist_html="<tr>";
+String dtlist_html="";
 
-
+String pk_id="";
 
 
 
@@ -367,6 +389,7 @@ while(res.next())
 
                 for (int i = 1; i <= columnCount; i++) 
                 {
+                    if(i==1){pk_id=metaData.getColumnLabel(i);}
                        mycolumns.add(metaData.getColumnLabel(i));             
                      hdslist_html+="<th>"+metaData.getColumnLabel(i)+"</th>";
                 }//end of for loop
@@ -380,9 +403,12 @@ while(res.next())
 for(int c=0;c<mycolumns.size();c++)
 {
     
-      dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
+      
 
-      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td></tr><tr>";}
+      String id="";
+      if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'";   dtlist_html+="<tr "+id+">";}
+      dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
+      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingData(\""+res.getString(tablecolid)+"\",\""+sourcetable+"\",\""+pk_id+"\");' class='btn btn-info'>Edit</label></td></tr>";}
 
 }
     
@@ -396,7 +422,7 @@ count++;
 
 
 
-finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered'><thead><tr>"+hdslist_html+"<th>Edit</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
+finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered' border='1px'><thead><tr>"+hdslist_html+"<th>Edit</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
 
 
 
@@ -404,4 +430,12 @@ finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-stripe
 return finaltbl;
 }
     
+
+
+public int getRandNo(int start, int end ){
+        Random random = new Random();
+        long fraction = (long) ((end - start + 1 ) * random.nextDouble());
+        return ((int)(fraction + start));
+    }
+
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package solicitation;
+package applicants;
 
 import Ajax.AuditTrail;
 import General.copytemplates;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class savesolicitaion extends HttpServlet {
+public class saveapplicants extends HttpServlet {
     
  
     
@@ -63,11 +63,11 @@ public class savesolicitaion extends HttpServlet {
             
             copytemplates ct= new copytemplates();
             
-            String table = " grants.solicitation_infor ";
+            String table = " grants.applicants_details ";
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","grant_id","nofo_number","performance_start_date","performance_end_date","award_mechanism","date_of_issuance","submission_by_date","means_of_submission","attachment_name","attachment_location","user_id"};
+            String[] dataelementsarr = {"table_id","solicitation_id","organization_name","type_of_organization","postal_address","email","phoneno","executive_name","executive_title","has_registration_certificate","nationality","has_pin_certificate","pin_number","is_tax_compliant","tax_compliant_certificate_file","universal_entity_number","universal_entity_certificate_file","final_eligibility_status","pin_certificate_attachment_file","other_requirement_attachment_file","user_id"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
       
@@ -128,8 +128,8 @@ public class savesolicitaion extends HttpServlet {
    
 //______________________________________________________________________________________
             if (conn.pst1.executeUpdate() == 1) {
-                out.println("Grants Data Saved Successfully");
-saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>";
+                out.println("Applicants Data Saved Successfully");
+saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
                 
 
                 if (ses.getAttribute("kd_session") != null) {
@@ -139,44 +139,46 @@ saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>"
                     hm = (HashMap<String, String>) ses.getAttribute("kd_session");
 
                     AuditTrail ad = new AuditTrail();
-                    ad.addTrail(conn, hm, "Saved Solicitation Named"
-                            + " " + request.getParameter("nofo_number"));
+                    ad.addTrail(conn, hm, "Saved Applicants Named"
+                            + " " + request.getParameter("organization_name"));
 
                 }
 
             } else {
-               saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>";
+               saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
                 out.println(" Data Not successfully saved ");
 
             }
             
-            
-            
+            //Below two fields must be equalin terms of length
+           String uploadinputfields[]={"tax_compliant_certificate_file","universal_entity_certificate_file","pin_certificate_attachment_file","other_requirement_attachment_file"};
+           String FileNames[]={"TCC","UEC","PIN","Others"};
     //_________________________________________________________________Transfer File into a Folder______________________________________________________        
             
               String filename="";
         
-        if(request.getParameter("nofo_number")!=null)
+        if(request.getParameter("organization_name")!=null)
         {     
             
             //String ,String attachmentcolname, String filename,String tableid,String tableidvalue
             
+            for (int a=0;a<FileNames.length;a++){
             
             HashMap<String,String> hm=new HashMap();
             
             hm.put("tablename",table);
-            hm.put("attachmentcolname","attachment_location");     //_____________To be edited in every new servlet_____
+            hm.put("attachmentcolname",uploadinputfields[a]);     //_____________To be edited in every new servlet_____
             
             hm.put("tableid",dataelementsarr[0]);
             hm.put("tableidvalue",request.getParameter(dataelementsarr[0]));
             
-            filename=request.getParameter("nofo_number")+"_";
-            String pathname=ct.uploadFile(request, filename,"Solicitation");
+            filename=request.getParameter("organization_name")+"_"+FileNames[a]+"_";
+            String pathname=ct.uploadFile(request, filename,"Applicants");
             
             hm.put("filename",pathname);
             System.out.println(updateFileName(conn, hm));
             //String tablename,String attachmentcolname, String filename,String tableid,String tableidvalue
-            
+            }
             
         }
             
@@ -204,12 +206,12 @@ saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>"
         } catch (SQLException ex) {
             
             saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
-            Logger.getLogger(savesolicitaion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        ses.setAttribute("solicitation_response",saveresponse);
-        response.sendRedirect("solicitation.jsp");
+        ses.setAttribute("applicants_response",saveresponse);
+        response.sendRedirect("applicants.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -280,7 +282,7 @@ saveresponse="<font color=\"green\">Solicitation Data Saved Successfully</font>"
             
         } catch (SQLException ex) {
               status="Error while updating file"+ex;
-            Logger.getLogger(savesolicitaion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
         }
       return status;
     

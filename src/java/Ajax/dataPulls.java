@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,7 +46,7 @@ public class dataPulls extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            
+            HttpSession sess=request.getSession(true);
             
             dbConnweb conn = new dbConnweb();
             
@@ -116,6 +118,8 @@ public class dataPulls extends HttpServlet {
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
             }
+            
+            //________________________________________Solicitation Forms_________________________________________
             if(act.equals("getsubmissionmeans"))
             {               
                 
@@ -129,6 +133,46 @@ public class dataPulls extends HttpServlet {
             {               
                 
                ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(grant_id,',',mechanism_name,' [',prime_award_number,'] ') as granti from grants.grants_infor");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("dlt"))
+            {               
+             //This act deletes data that is shared per row id and per table
+                System.out.println("Deleting data for "+pkidval);
+                out.println(deleteRow(conn,pkidval,tablepkid,maintablename));  
+                
+                //Log the delete action into the Logs table
+                  if (sess.getAttribute("kd_session") != null) {
+
+                    HashMap<String, String> hm = new HashMap<>();
+
+                    hm = (HashMap<String, String>) sess.getAttribute("kd_session");
+
+                    AuditTrail ad = new AuditTrail();
+                    ad.addTrail(conn, hm, "Deleted a Record "+pkidval+" from the table "+ " " + maintablename);
+
+                }
+                
+    
+            }
+            //________________________________________________Applicant Details__________________________________
+            
+             if(act.equals("getorgtypes"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',organizationtypes) as rcd from grants.opts_organizationtypes where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+             
+             
+              if(act.equals("getsolicitation"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(table_id,',',award_mechanism,' [',nofo_number,'] ') as nofo from grants.solicitation_infor");
 
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
@@ -365,7 +409,7 @@ String finaltbl="";
 String hdslist_html="";
 String dtlist_html="";
 
-String pk_id="";
+String primarykeycolumnname="";
 
 
 
@@ -389,7 +433,7 @@ while(res.next())
 
                 for (int i = 1; i <= columnCount; i++) 
                 {
-                    if(i==1){pk_id=metaData.getColumnLabel(i);}
+                    if(i==1){primarykeycolumnname=metaData.getColumnLabel(i);}
                        mycolumns.add(metaData.getColumnLabel(i));             
                      hdslist_html+="<th>"+metaData.getColumnLabel(i)+"</th>";
                 }//end of for loop
@@ -408,8 +452,8 @@ for(int c=0;c<mycolumns.size();c++)
       String id="";
       if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'";   dtlist_html+="<tr "+id+">";}
       dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
-      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingData(\""+res.getString(tablecolid)+"\",\""+sourcetable+"\",\""+pk_id+"\");' class='btn btn-info'>Edit</label></td></tr>";}
-
+      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingData(\""+res.getString(tablecolid)+"\",\""+sourcetable+"\",\""+primarykeycolumnname+"\");' class='btn btn-info'>Edit</label></td><td><label onclick='dltrw(\""+res.getString(tablecolid)+"\",\""+sourcetable+"\",\"dlt\",\""+primarykeycolumnname+"\");' class='btn btn-danger'>Delete</label></td></tr>";}
+//dltrw
 }
     
 
@@ -422,7 +466,7 @@ count++;
 
 
 
-finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered' border='1px'><thead><tr>"+hdslist_html+"<th>Edit</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
+finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered' border='1px'><thead><tr>"+hdslist_html+"<th>Edit</th><th>Delete</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
 
 
 
@@ -438,4 +482,26 @@ public int getRandNo(int start, int end ){
         return ((int)(fraction + start));
     }
 
+
+
+public String deleteRow(dbConnweb con, String rowid,String primarykeycolumn, String tbl)
+{
+     String status="Data deleted";
+        try {
+           
+            
+            String qry="delete from "+tbl+" where "+primarykeycolumn+"="+rowid;
+            
+            con.st.executeUpdate(qry);
+            
+            
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(dataPulls.class.getName()).log(Level.SEVERE, null, ex);
+            
+              status="Error while deleting data:"+ex;
+        }
+        
+         return status;
+}
 }

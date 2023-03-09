@@ -49,6 +49,9 @@
                                          <li class="nav-item">
 					    <a href="solicitation.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-airplay"></i></span><span class="pcoded-mtext">Solicitation</span></a>
 					</li>
+                                         <li class="nav-item">
+					    <a href="applicants.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-info"></i></span><span class="pcoded-mtext">Applicants</span></a>
+					</li>
                                         <li class="nav-item">
 					    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Dashboards</span></a>
 					</li>

@@ -465,7 +465,42 @@ for (const key in data[0]) {
     
 }
 
-  
+   function dltrw(rw,tbl,act,tblid){
+     
+     var result = confirm("Are you sure you want to delete this row?");
+if (result) {
+    //Logic to delete the item
+
+    
+            //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                    dataType: 'html',  
+                    data:{act:act,                         
+                          tablename:tbl,
+                          pkid:tblid,
+                        pkidval:rw},
+                    success: function(data) 
+                    {
+                        var dt = data;
+       
+          refreshPage();
+                        
+                    }});    
+            }
+           
+   
+          
+    
+}
+
+
+function refreshPage(){
+    
+      window.location.reload();
+    
+}
   
 
 

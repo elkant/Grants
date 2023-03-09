@@ -238,12 +238,12 @@ public void copydocs(String sourcepath,String destpath ){
         return file_name;
     }
     
-   public void uploadFile(HttpServletRequest request,String filename, String Folder) throws IOException, IllegalStateException, ServletException{
+   public String uploadFile(HttpServletRequest request,String filename, String Folder) throws IOException, IllegalStateException, ServletException {
    
        HttpSession sess= request.getSession(true);
         String fu_pth="";
   String finame="";
-
+  String np = "";
    
     final String upload_dir = "grantfiles";
        
@@ -262,11 +262,11 @@ public void copydocs(String sourcepath,String destpath ){
             part.write(uploadFilePath + File.separator + finame);
             }
          
-        if(!(finame.endsWith(".pdf")||finame.endsWith(".docx")||finame.endsWith(".doc")||finame.endsWith(".xlsx")||finame.endsWith(".xls")||finame.endsWith(".xlsm")||finame.endsWith(".zip")||finame.endsWith(".gz"))){
-          sess.setAttribute("upload_success", "<font color=\"red\">Failed to upload file.</font>");   
+        if(!(finame.endsWith(".pptx")||finame.endsWith(".ppt")||finame.endsWith(".pdf")||finame.endsWith(".docx")||finame.endsWith(".doc")||finame.endsWith(".xlsx")||finame.endsWith(".xls")||finame.endsWith(".xlsm")||finame.endsWith(".zip")||finame.endsWith(".gz"))){
+          sess.setAttribute("file_upload", "<font color=\"red\">Error: File type not supported.</font>");   
         }
         else {
-            
+            sess.setAttribute("file_upload","<font color=\"green\">Error: File type not supported.</font>");
             
             fu_pth=fileSaveDir.getAbsolutePath()+"/"+finame;
             
@@ -280,7 +280,7 @@ public void copydocs(String sourcepath,String destpath ){
    String mydrive = location.getFile().substring(1, 2);
   
   
-  String np = "";
+
             
             if (OSValidator.isWindows()) 
             {
@@ -319,7 +319,10 @@ public void copydocs(String sourcepath,String destpath ){
             
              }//end of file upload
         }//end of for loop
-       
+        
+        
+        //return the full path where the file is saved
+       return np;
    } 
     
  

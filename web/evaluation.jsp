@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Manage Applicants</title>
+	<title>Manage Evaluations</title>
 	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 11]>
@@ -88,7 +88,7 @@
 					<div class="card-body">
 						<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Applicants</a>
+								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Conduct Evaluations</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-uppercase" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View/Edit</a>
@@ -107,9 +107,9 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="saveapplicants" enctype="multipart/form-data" method="POST">
+                                <form action="saveevaluation" enctype="multipart/form-data" method="POST">
                                     
-						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Add Applicants </b></h2>
+						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Conduct Evaluations </b></h2>
 					
                                     <div class="form-row">
                                         
@@ -136,30 +136,25 @@
 <input required="true" value="<%=uid%>" type='hidden' class='form-control' id='user_id' name='user_id'  placeholder='User id'/>
                  
                                     
- 
 
 <div class='form-group col-md-4'>
-<label for='solicitation_id'><b>NOFO Number<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='solicitation_id' name='solicitation_id'  >
+<label for='applicate_id'><b>Applicant Name<font color='red'>*</font></b></label>
+<select required='true' class='form-control' id='applicate_id' name='applicate_id'  >
 <option value=''></option>
 </select>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='organization_name'><b>Organization Name<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='organization_name' name='organization_name'  placeholder='Enter Organization Name'/>
+<label for='technical_evaluation_score'><b>Technical Evaluation Score<font color='red'>*</font></b></label>
+<input  onkeyup="autosum('technical_evaluation_score,mne_evaluation_score,finance_evaluation_score,other_evaluation_score','overall_score');" onkeypress='return numbers(event);'  type='input' class='form-control' id='technical_evaluation_score' name='technical_evaluation_score'  placeholder='Enter Technical Evaluation Score'/>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='type_of_organization'><b>Type of Organization<font color='red'>*</font></b></label>
-<select class='form-control' id='type_of_organization' name='type_of_organization'  >
-<option value=''></option>
-</select>
+<label for='mne_evaluation_score'><b>M&E Evaluation Score<font color='red'>*</font></b></label>
+<input  onkeyup="autosum('technical_evaluation_score,mne_evaluation_score,finance_evaluation_score,other_evaluation_score','overall_score');" onkeypress='return numbers(event);'  type='input' class='form-control' id='mne_evaluation_score' name='mne_evaluation_score'  placeholder='Enter M&E Evaluation Score'/>
 </div>
-
-
 
 
 
@@ -171,83 +166,65 @@
   <div class="form-row">   
 
 
+ 
+
 <div class='form-group col-md-4'>
-<label for='postal_address'><b>Postal Address<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='postal_address' name='postal_address'  placeholder='Enter Postal Address'/>
+<label for='finance_evaluation'><b>Finance Evaluation Score<font color='red'>*</font></b></label>
+<input  onkeyup="autosum('technical_evaluation_score,mne_evaluation_score,finance_evaluation_score,other_evaluation_score','overall_score');" onkeypress='return numbers(event);'  type='input' class='form-control' id='finance_evaluation_score' name='finance_evaluation_score'  placeholder='Enter Finance Evaluation Score'/>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='email'><b>Email Address<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='email' name='email'  placeholder='Enter Email Address'/>
+<label for='other_evaluation'><b>Other Evaluation Score<font color='red'>*</font></b></label>
+<input  onkeyup="autosum('technical_evaluation_score,mne_evaluation_score,finance_evaluation_score,other_evaluation_score','overall_score');" onkeypress='return numbers(event);'  type='input' class='form-control' id='other_evaluation_score' name='other_evaluation_score'  placeholder='Enter Other Evaluation Score'/>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='phoneno'><b>Phone Number<font color='red'>*</font></b></label>
-<input required="true"  type='tel' class='form-control' id='phoneno' name='phoneno'  placeholder='Enter Phone Number'/>
+<label for='overall_score'><b>Overall score<font color='red'>*</font></b></label>
+<input readonly='true' type='input' class='form-control' id='overall_score' name='overall_score'  placeholder='Enter Overall score'/>
+</div>     
+
+
+
+</div>
+  
+
+  <div class="form-row">  
+
+      
+      <div class='form-group col-md-4'>
+<label for='technical_evaluation_attachment'><b>Technical Evaluation attachment<font color='red'>*</font></b></label>
+<input  required='true' type='file' class='form-control' id='technical_evaluation_attachment' name='technical_evaluation_attachment'  placeholder='Enter Technical Evaluation attachment'/>
 </div>
 
+
+<div class='form-group col-md-4'>
+<label for='mne_evaluation_attachment'><b>Monitoring and Evaluation Attachment<font color='red'>*</font></b></label>
+<input required='true' type='file' class='form-control' id='mne_evaluation_attachment' name='mne_evaluation_attachment'  placeholder='Enter Monitoring and Evaluation Attachment'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='finance_evaluation_attachment'><b>Finance Evaluation attachment<font color='red'>*</font></b></label>
+<input required='true' type='file' class='form-control' id='finance_evaluation_attachment' name='finance_evaluation_attachment'  placeholder='Enter Finance Evaluation attachment'/>
+</div>
+      
 
 </div>
   <div class="form-row">  
 
+  
+      
 <div class='form-group col-md-4'>
-<label for='executive_name'><b>Executive Name</b></label>
-<input  type='input' class='form-control' id='executive_name' name='executive_name'  placeholder='Enter Executive Name'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='executive_title'><b>Executive Title</b></label>
-<input   type='input' class='form-control' id='executive_title' name='executive_title'  placeholder='Enter Executive Title'/>
+<label for='other_evaluation_attachment'><b>Other Evaluation Attachments<font color='red'>*</font></b></label>
+<input required='true' type='file' class='form-control' id='other_evaluation_attachment' name='other_evaluation_attachment'  placeholder='Enter Other Evaluation Attachments'/>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='has_registration_certificate'><b>Has Registration Certificate?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='has_registration_certificate' name='has_registration_certificate'  >
-<option value=''>Select Option</option>
-<option value='Yes'>Yes</option>
-<option value='No'>No</option>
-</select>
-</div>
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='nationality'><b>Nationality<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='nationality' name='nationality'  >
-<option value=''>Select Option</option>
-<option value='Kenya'>Kenya</option>
-<option value='Tanzania'>Tanzania</option>
-<option value='Uganda'>Uganda</option>
-<option value='US'>US</option>
-</select>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='has_pin_certificate'><b>Has Pin Certificate?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='has_pin_certificate' name='has_pin_certificate'  >
-<option value=''>Select Option</option>
-<option value='Yes'>Yes</option>
-<option value='No'>No</option>
-</select>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='pin_number'><b>Pin Number</b></label>
-<input   type='input' class='form-control' id='pin_number' name='pin_number'  placeholder='Enter Pin Number'/>
-</div>
-
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='is_tax_compliant'><b>Is Tax Compliant?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='is_tax_compliant' name='is_tax_compliant'  >
+<label for='is_applicant_selected'><b>Is applicant selected?<font color='red'>*</font></b></label>
+<select required='true' class='form-control' id='is_applicant_selected' name='is_applicant_selected'  >
 <option value=''>Select Option</option>
 <option value='Yes'>Yes</option>
 <option value='No'>No</option>
@@ -256,60 +233,20 @@
 
 
 <div class='form-group col-md-4'>
-<label for='tax_compliant_certificate_file'><b>Upload Tax Compliant Certificate</b></label>
-<input   type='file' class='form-control' id='tax_compliant_certificate_file' name='tax_compliant_certificate_file'  placeholder='Enter Upload Tax Compliant Certificate'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='universal_entity_number'><b></b>Universal Entity Number
-</label>
-<input   type='input' class='form-control' id='universal_entity_number' name='universal_entity_number'  placeholder='Enter '/>
-</div>
-
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='universal_entity_certificate_file'><b>Upload Universal entity Certificate</b></label>
-<input   type='file' class='form-control' id='universal_entity_certificate_file' name='universal_entity_certificate_file'  placeholder='Enter Upload Universal entity Certificate'/>
-</div>
-                     
-
-      
-      
-   
-
-
-
-
-<div class='form-group col-md-4'>
-<label for='pin_certificate_attachment_file'><b>Upload Pin Certificate Attachment</b></label>
-<input  type='file' class='form-control' id='pin_certificate_attachment_file' name='pin_certificate_attachment_file'  placeholder='Enter Upload Pin Certificate Attachment'/>
-</div>
-      
-      
-<div class='form-group col-md-4'>
-<label for='other_requirement_attachment_file'><b>Upload Other Required Attachments</b></label>
-<input type='file' class='form-control' id='other_requirement_attachment_file' name='other_requirement_attachment_file'  placeholder='Enter Upload Other Required Attachments'/>
+<label for='post_evaluation_minutes'><b>Post evaluation Minutes Upload<font color='red'>*</font></b></label>
+<input required='true' type='file' class='form-control' id='post_evaluation_minutes' name='post_evaluation_minutes'  placeholder='Enter Post evaluation Minutes Upload'/>
 </div>
 
       
       
 
 </div>
+  
   <div class="form-row"> 
 
 
 
-         <div class='form-group col-md-4'>
-<label for='final_eligibility_status'><b>Is the Applicant Eligible?<font color='red'>*</font></b></label>
-<select required="true" class='form-control' id='final_eligibility_status' name='final_eligibility_status'  >
-<option value=''>Select Option</option>
-<option value='Eligible'>Eligible</option>
-<option value='Ineligible'>In eligible</option>
-</select>
-</div>
+   
           
             
             <div class='form-group col-md-4'>
@@ -374,16 +311,16 @@
     <script type="text/javascript" src="assets/js/jquery.fileDownload.js"></script>
     
     
-   <%if (session.getAttribute("applicants_response") != null) { %>
+   <%if (session.getAttribute("evaluation_response") != null) { %>
    <script type="text/javascript"> 
                     
-                    var uju='<%=session.getAttribute("applicants_response")%>';
+                    var uju='<%=session.getAttribute("evaluation_response")%>';
                     $('.ujumbe').html(uju);
                     $('.callalert').click();
                       
                     
                 </script> <%
-                session.removeAttribute("applicants_response");
+                session.removeAttribute("evaluation_response");
                             }
 
     %>
@@ -532,7 +469,7 @@ $("#"+elementtoappend).html(""+dt);
     
 }
     
-  loadEdits('searchtable','applicants_details','loadedits','vw_applicants_details','table_id'); 
+  loadEdits('searchtable','evaluation_details','loadedits','vw_evaluation_details','table_id'); 
   
   
   
@@ -628,8 +565,8 @@ for (const key in data[0])
           
     
 }
-    loadSelectOptionsPerField('type_of_organization','getorgtypes','');       
-     loadSelectOptionsPerField('solicitation_id','getsolicitation',''); 
+         
+     loadSelectOptionsPerField('applicate_id','getapplicants',''); 
       
 
 
@@ -694,6 +631,22 @@ function refreshPage(){
     
 }
 
+
+function autosum(sourceindics,dest){
+    
+    var elms=sourceindics.split(",");
+    
+    var ttl=0;
+    for(var x=0;x<elms.length;x++){
+    if($("#"+elms[x]).val()!=='')
+    {
+      ttl=ttl+parseInt($("#"+elms[x]).val()); 
+    }    
+        
+        
+    }
+    $("#"+dest).val(ttl);
+}
 
 </script>    
 </body>

@@ -53,20 +53,25 @@
 					    <a href="applicants.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-info"></i></span><span class="pcoded-mtext">Applicants</span></a>
 					</li>
                                         <li class="nav-item">
-					    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Dashboards</span></a>
+					    <a href="evaluation.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-filter"></i></span><span class="pcoded-mtext">Evaluations</span></a>
 					</li>
-					<li class="nav-item pcoded-hasmenu">
+<!--                                        <li class="nav-item">
+					    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Dashboards</span></a>
+					</li>-->
+                                        
+                                        
+<!--					<li class="nav-item pcoded-hasmenu">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Page layouts</span></a>
 					    <ul class="pcoded-submenu">
 					        <li><a href="layout-vertical.html" target="_blank">Vertical</a></li>
 					        <li><a href="layout-horizontal.html" target="_blank">Horizontal</a></li>
 					    </ul>
-					</li>
+					</li>-->
 					<li class="nav-item pcoded-menu-caption">
 						<label>Management</label>
 					</li>
 					<li class="nav-item pcoded-hasmenu">
-						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">manage Forms</span></a>
+						<!--<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">_</span></a>-->
 						<ul class="pcoded-submenu">
 							<li><a href="bc_alert.html">Alert</a></li>
 							<li><a href="bc_button.html">Button</a></li>
@@ -93,13 +98,13 @@
 					<li class="nav-item pcoded-menu-caption">
 						<label>Reports</label>
 					</li>
-					<li class="nav-item pcoded-hasmenu">
+<!--					<li class="nav-item pcoded-hasmenu">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Excel Based Reports</span></a>
 					    <ul class="pcoded-submenu">
 					        <li><a href="auth-signup.html" target="_blank">Sign up</a></li>
 					        <li><a href="auth-signin.html" target="_blank">Sign in</a></li>
 					    </ul>
-					</li>
+					</li>-->
                                         
                                         
                                         <li class="nav-item pcoded-hasmenu">

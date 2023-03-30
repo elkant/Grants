@@ -177,6 +177,14 @@ public class dataPulls extends HttpServlet {
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
             }
+              if(act.equals("getapplicants"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(table_id,',',organization_name) as applicant from grants.applicants_details");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
             
             
         }

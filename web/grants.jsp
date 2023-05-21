@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	 <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
 	  <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+ <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -254,7 +254,11 @@
 
 
    <script  src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="assets/js/datatables.min.js"></script>
+     
+ <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script>
+    
+   
+    <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
     
     
        <%if (session.getAttribute("grants_response") != null) { %>
@@ -360,7 +364,8 @@ $("#"+elementtoappend).html(""+dt);
               "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": false,  
+              "lengthChange": true, 
+             
               "order": [[0,'desc']]});
  
     $('#searchtable_'+elementtoappend+' tbody').on( 'click', 'tr', function () {

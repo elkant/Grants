@@ -139,7 +139,7 @@
 								<h5 class="card-title">Update Assessments</h5>
 								<p class="card-text">From the selected applicants above, overall risk rating will be done and recommendations done on whether to issue a sub award or not. Here you can add, edit or delete Solicitation details</p>
 								<br/>
-                                                                <a href="preawardassessments.jsp" class="btn  btn-primary">Manage Assessments</a>
+                                                                <a href="pre_award_assessment.jsp" class="btn  btn-primary">Manage Assessments</a>
 								
 							</div>
 						</div>

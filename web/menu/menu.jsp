@@ -55,6 +55,12 @@
                                         <li class="nav-item">
 					    <a href="evaluation.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-filter"></i></span><span class="pcoded-mtext">Evaluations</span></a>
 					</li>
+                                         <li class="nav-item">
+					    <a href="pre_award_assessment.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-crop"></i></span><span class="pcoded-mtext">Pre-Award Assessment</span></a>
+					</li>
+                                         <li class="nav-item">
+					    <a href="subrecipients.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-star"></i></span><span class="pcoded-mtext">Sub recipients</span></a>
+					</li>
 <!--                                        <li class="nav-item">
 					    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Dashboards</span></a>
 					</li>-->

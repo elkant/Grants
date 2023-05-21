@@ -24,7 +24,8 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	 <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
 	  <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
+          <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
+ 
 </head>
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -146,8 +147,8 @@
 
 
 <div class='form-group col-md-4'>
-<label for='nofo_number'><b>Nofo Number<font color='red'>*</font></b></label>
-<input type='input' class='form-control' id='nofo_number' name='nofo_number'  placeholder='Enter Nofo Number'/>
+<label for='nofo_number'><b>Solicitation Reference <font color='red'>*</font></b></label>
+<input type='input' class='form-control' id='nofo_number' name='nofo_number'  placeholder='Enter Reference Number'/>
 </div>
 
 
@@ -196,7 +197,7 @@
 
 
 <div class='form-group col-md-4'>
-<label for='attachment_location'><b>Upload Documents<font color='red'>*</font></b></label>
+<label for='attachment_location'><b>Upload Documents <font color="orange">(to upload multiple files, zip them)</font><font color='red'>*</font></b></label>
 <input type='file' class='form-control' id='attachment_location' name='attachment_location'  placeholder='Enter Upload Documents'/>
 </div>
                      
@@ -234,7 +235,7 @@
 						</div>
 					</div>
                                                     
-                                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                    <div class="tab-pane fade active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 							
                                                         <div id="searchtable">
                                   Edit Form
@@ -261,9 +262,9 @@
     <script src="assets/js/pcoded.min.js"></script>
 
 
-   <script  src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="assets/js/datatables.min.js"></script>
-    
+    <script  src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script> 
+    <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.fileDownload.js"></script>
     
     
@@ -384,8 +385,8 @@ $("#"+elementtoappend).html(""+dt);
           var table = $('#searchtable_'+elementtoappend).DataTable({
               "autoWidth": true,
               "paging": true,
-              "pagingType": "full",
-              "lengthChange": false,  
+              "pagingType": "full",              
+              "lengthChange": true,  responsive:true,
               "order": [[0,'desc']]});
  
 //    $('#searchtable_'+elementtoappend+' tbody').on( 'click', 'tr', function () {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package evaluation;
+package pre_award_assessment;
 
 import Ajax.AuditTrail;
 import General.copytemplates;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class saveevaluation extends HttpServlet {
+public class savepreawardasses extends HttpServlet {
     
  
     
@@ -63,17 +63,14 @@ public class saveevaluation extends HttpServlet {
             
             copytemplates ct= new copytemplates();
             
-            String table = " grants.evaluation_details ";
+            String table = " grants.applicants_details ";
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","applicate_id","technical_evaluation_score","mne_evaluation_score","finance_evaluation_score","other_evaluation_score","overall_score","technical_evaluation_attachment","mne_evaluation_attachment","finance_evaluation_attachment","other_evaluation_attachment","is_applicant_selected","post_evaluation_minutes","user_id","response_to_applicant"};
+            String[] dataelementsarr = {"table_id","organization_name","overall_risk_rating","recommendation","pre_award_assesment_report","user_id"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
       
-            
-                      
-            
             
             
             try  {
@@ -82,28 +79,32 @@ public class saveevaluation extends HttpServlet {
 
             //This section here saves every field in a div mode i.i every form fied has a row.
             //Any time you save data, First delete any existing data for that petient at the start of the operation.          
-            String insertqr_parta = "replace into " + table + " (";  // finish with )
+            String insertqr_parta = "update " + table + " set ";  // finish with )
             String insertqr_partb = " values ("; // finish with )
 
             for (int a = 0; a < dataelementsarr.length; a++) {
 
 //build an inster qry
-                if (a == dataelementsarr.length - 1) {
-                    insertqr_parta += dataelementsarr[a] + "";
-                    insertqr_partb += "?";
-                } else {
-                    insertqr_parta += dataelementsarr[a] + ",";
-                    insertqr_partb += "?,";
+                if (a == dataelementsarr.length - 1) 
+                {
+                    insertqr_parta += dataelementsarr[a] + "=?";
+                    //insertqr_partb += "?";
+                }
+                else 
+                {
+                    insertqr_parta += dataelementsarr[a] + "=?,";
+                    //insertqr_partb += "?,";
                 }
             }
 //append orgunits
 
 //last section
-            insertqr_parta += ")";
-            insertqr_partb += ")";
+            insertqr_parta += " where "+dataelementsarr[0]+" =? ";
+            
 
 //append  
-            String insertqry = insertqr_parta + insertqr_partb;
+            String insertqry = insertqr_parta ;
+//+ insertqr_partb;
 
             //System.out.println(""+insertqry);
             //conn.st_2.executeUpdate(updateqr);
@@ -124,12 +125,12 @@ public class saveevaluation extends HttpServlet {
                 rowcount++;
 
             }
-
-   
+conn.pst1.setString(rowcount, request.getParameter(dataelementsarr[0]));
+                System.out.println("____"+conn.pst1);
 //______________________________________________________________________________________
             if (conn.pst1.executeUpdate() == 1) {
-                out.println("Evaluations Data Saved Successfully");
-saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
+                out.println("Applicants Data Saved Successfully");
+saveresponse="<font color=\"green\">Pre-Award Assessment Data Saved Successfully</font>";
                 
 
                 if (ses.getAttribute("kd_session") != null) {
@@ -139,25 +140,25 @@ saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
                     hm = (HashMap<String, String>) ses.getAttribute("kd_session");
 
                     AuditTrail ad = new AuditTrail();
-                    ad.addTrail(conn, hm, "Saved Evaluations Named"
-                            + " " + request.getParameter("applicate_id"));
+                    ad.addTrail(conn, hm, "Saved Pre-Award Assessment Named"
+                            + " " + request.getParameter("organization_name"));
 
                 }
 
             } else {
-               saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
+               saveresponse="<font color=\"green\">Pre-Award Assessment Data Saved Successfully</font>";
                 out.println(" Data Not successfully saved ");
 
             }
             
             //Below two fields must be equalin terms of length
-           String uploadinputfields[]={"technical_evaluation_attachment","mne_evaluation_attachment","finance_evaluation_attachment","other_evaluation_attachment","post_evaluation_minutes","response_to_applicant"};
-           String FileNames[]={"TC_EV","ME_EV","FN_EV","OTHER_EV","RTA"};
+           String uploadinputfields[]={"pre_award_assesment_report"};
+           String FileNames[]={"PASR"};
     //_________________________________________________________________Transfer File into a Folder______________________________________________________        
             
               String filename="";
         
-        if(request.getParameter("applicate_id")!=null)
+        if(request.getParameter("organization_name")!=null)
         {     
             
             //String ,String attachmentcolname, String filename,String tableid,String tableidvalue
@@ -172,8 +173,8 @@ saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
             hm.put("tableid",dataelementsarr[0]);
             hm.put("tableidvalue",request.getParameter(dataelementsarr[0]));
             
-            filename=request.getParameter("applicate_id")+"_"+FileNames[a]+"_";
-            String pathname=ct.uploadFile(request, filename,"Evaluations");
+            filename=request.getParameter("organization_name")+"_"+FileNames[a]+"_";
+            String pathname=ct.uploadFile(request, filename,"Applicants");
             
             hm.put("filename",pathname);
             System.out.println(updateFileName(conn, hm));
@@ -206,12 +207,12 @@ saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
         } catch (SQLException ex) {
             
             saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
-            Logger.getLogger(saveevaluation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(savepreawardasses.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        ses.setAttribute("evaluation_response",saveresponse);
-        response.sendRedirect("evaluation.jsp");
+        ses.setAttribute("preaward_response",saveresponse);
+        response.sendRedirect("pre_award_assessment.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -282,7 +283,7 @@ saveresponse="<font color=\"green\">Evaluations Data Saved Successfully</font>";
             
         } catch (SQLException ex) {
               status="Error while updating file"+ex;
-            Logger.getLogger(saveevaluation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(savepreawardasses.class.getName()).log(Level.SEVERE, null, ex);
         }
       return status;
     

@@ -185,6 +185,14 @@ public class dataPulls extends HttpServlet {
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
             }
+              if(act.equals("getrecomendations"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',recommendation) as recommends from grants.opts_recommendation");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
             
             
         }
@@ -389,10 +397,11 @@ while(res.next())
 JSONObject jo = new JSONObject(); 
 
 for(int c=0;c<mycolumns.size();c++){
+    String vl="";
+    if(res.getString(mycolumns.get(c).toString())!=null){vl=res.getString(mycolumns.get(c).toString());}
+jo.put(mycolumns.get(c).toString(),vl);
+
     
-jo.put(mycolumns.get(c).toString(),res.getString(mycolumns.get(c).toString()));
-
-
 }
 
 

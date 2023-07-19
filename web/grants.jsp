@@ -193,15 +193,33 @@
 <label for='mechanism_name'><b>Mechanism Name<font color='red'>*</font></b></label>
 <input  required="true" type='input' class='form-control' id='mechanism_name' name='mechanism_name'  placeholder='Enter Mechanism Name'/>
 </div>
-          
             
             <div class='form-group col-md-4'>
+<label for='subaward_type'><b>Sub Award Type<font color='red'>*</font></b></label>
+<select onchange="showHiddenElement('subaward_type','other_','subaward_type_other');" required='true' class='form-control' id='subaward_type' name='subaward_type'  >
+<option value=''></option>
+</select>
+</div>
+          
+            
+          
+            
+         </div>
+
+<div class="form-row">
+    
+    <div style="display:none;" class='form-group col-md-4 subaward_type_other'>
+<label for='subaward_type_other'><b>Sub Award Type Other<font color='red'>*</font></b></label>
+<input  type='input' class='form-control' id='subaward_type_other' name='subaward_type_other'  placeholder='Enter Sub Award Type Other'/>
+</div>
+    
+      <div class='form-group col-md-4'>
                 <label for='submit_frm'><b>.</b></label>
          <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
             
          </div>
-            
-         </div>
+    
+</div>
 <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
 		<div class="toast-header">
 									
@@ -507,7 +525,42 @@ function refreshPage(){
     
 }
   
+  function showHiddenElement(primeelement,ifvalueis,unhide_eleme){
+    
+    
+    var se=$("#"+primeelement).val();
+    
+    if(se===ifvalueis){ $("."+unhide_eleme).show(); } else{ $("."+unhide_eleme).hide();$("#"+unhide_eleme).val(""); }
+    
+    
+    
+}
 
+ function loadSelectOptionsPerField(elemid,act,selval){
+    
+            //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                    dataType: 'html',  
+                    data:{act:act,                         
+                         loadmtrs_sel_val:selval},
+                    success: function(data) 
+                    {
+                        var dt = data;
+       
+          $("#"+elemid).html(dt);
+                        
+                    }});    
+         
+           
+   
+          
+    
+}
+     
+
+ loadSelectOptionsPerField('subaward_type','getsubawardtypes_grants',''); 
 
 </script>    
 </body>

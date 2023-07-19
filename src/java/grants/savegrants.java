@@ -54,7 +54,7 @@ public class savegrants extends HttpServlet {
 
             String mfl = "";
 
-            String[] dataelementsarr = {"grant_id","donor_name", "donor_code", "prime_recipient", "prime_award_number", "country_of_implementation", "implementation_startdate", "implementation_enddate", "obligation_enddate", "costshare_obligation", "grant_amount","mechanism_name"};
+            String[] dataelementsarr = {"grant_id","donor_name", "donor_code", "prime_recipient", "prime_award_number", "country_of_implementation", "implementation_startdate", "implementation_enddate", "obligation_enddate", "costshare_obligation", "grant_amount","mechanism_name","subaward_type","subaward_type_other"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
             ArrayList al = new ArrayList();

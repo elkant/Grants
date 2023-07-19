@@ -61,6 +61,19 @@
                                          <li class="nav-item">
 					    <a href="subrecipients.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-star"></i></span><span class="pcoded-mtext">Sub recipients</span></a>
 					</li>
+                                        <li class="nav-item">
+					    <a href="subrecipients_lop_budget.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Lop Budget</span></a>
+					</li>
+                                        <li class="nav-item">
+					    <a href="obligated_budget.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-watch"></i></span><span class="pcoded-mtext">Obligated Budget</span></a>
+					</li>
+                                        
+                                         <li class="nav-item">
+					    <a href="modification.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-edit-2"></i></span><span class="pcoded-mtext">Modifications</span></a>
+					</li>
+                                         <li class="nav-item">
+					    <a href="financial_reports.jsp" class="nav-link "><span class="pcoded-micon"><i class="feather icon-trending-up"></i></span><span class="pcoded-mtext">Financial Reports</span></a>
+					</li>
 <!--                                        <li class="nav-item">
 					    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span><span class="pcoded-mtext">Dashboards</span></a>
 					</li>-->

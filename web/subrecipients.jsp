@@ -108,7 +108,7 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="savepreawardasses" enctype="multipart/form-data" method="POST">
+                                <form action="savesubrecipient" enctype="multipart/form-data" method="POST">
                                     
 						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Update Sub-recipient</b></h2>
 				<div class="form-row">
@@ -132,7 +132,7 @@
                                         
                                         
                                         <a id="dwn"></a>
-<input required="true" value="<%=dp.getRandNo(1,10000)%>" type='hidden' class='form-control' id='subrec_id' name='subrec_id'  placeholder='Enter id'/>
+<input required="true" value="<%=dp.getRandNo(1,10000)%>" type='hidden' class='form-control' id='table_id' name='table_id'  placeholder='Enter id'/>
 <input required="true" value="<%=uid%>" type='hidden' class='form-control' id='user_id' name='user_id'  placeholder='User id'/>
                  
 <div class='form-group col-md-4'>
@@ -149,7 +149,7 @@
 
 <div class='form-group col-md-4'>
 <label for='subaward_type'><b>Sub Award Type<font color='red'>*</font></b></label>
-<select required='true' class='form-control' id='subaward_type' name='subaward_type'  >
+<select onchange="showHiddenElement('subaward_type','other','subaward_type_other');" required='true' class='form-control' id='subaward_type' name='subaward_type'  >
 <option value=''></option>
 </select>
 </div>
@@ -170,37 +170,41 @@
 
 
 
-<div class='form-group col-md-4'>
+<div style="display:none;" class='form-group col-md-4 subaward_type_other'>
 <label for='subaward_type_other'><b>Sub Award Type Other<font color='red'>*</font></b></label>
-<input type='input' class='form-control' id='subaward_type_other' name='subaward_type_other'  placeholder='Enter Sub Award Type Other'/>
+<input  type='input' class='form-control' id='subaward_type_other' name='subaward_type_other'  placeholder='Enter Sub Award Type Other'/>
 </div>
 
 <div class='form-group col-md-4'>
 <label for='subaward_startdate'><b>Sub Award Start Date<font color='red'>*</font></b></label>
-<input type='input' class='form-control tarehe' id='subaward_startdate' name='subaward_startdate'  placeholder='Enter Sub Award Start Date'/>
+<input required="true" type='input' class='form-control tarehe' id='subaward_startdate' name='subaward_startdate'  placeholder='Enter Sub Award Start Date'/>
 </div>
 
 <div class='form-group col-md-4'>
-<label for='subaward_enddate'><b>Sub Award Start Date<font color='red'>*</font></b></label>
-<input type='input' class='form-control tarehe' id='subaward_enddate' name='subaward_enddate'  placeholder='Enter Sub Award Start Date'/>
+<label for='subaward_enddate'><b>Sub Award End Date<font color='red'>*</font></b></label>
+<input required="true" type='input' class='form-control tarehe_kesho' id='subaward_enddate' name='subaward_enddate'  placeholder='Enter Sub Award End Date'/>
 </div>
 
-</div>
-
-
-
-  <div class="form-row"> 
-
-
-
-
-
+      
 <div class='form-group col-md-4'>
 <label for='reportingcurrency'><b>Reporting Currency<font color='red'>*</font></b></label>
 <select required='true' class='form-control' id='reportingcurrency' name='reportingcurrency'  >
 <option value=''></option>
 </select>
 </div>
+      
+      
+</div>
+
+
+
+  <div class="form-row"> 
+
+
+
+
+
+
 
 <div class='form-group col-md-4'>
 <label for='reportingfrequency'><b>Reporting Frequency<font color='red'>*</font></b></label>
@@ -217,6 +221,13 @@
 </div>
 
 
+      <div class='form-group col-md-4'>
+<label for='entity_type'><b>Entity Type<font color='red'>*</font></b></label>
+<select onchange="showHiddenElement('entity_type','other','entity_type_other');" required='true' class='form-control' id='entity_type' name='entity_type'  >
+<option value=''></option>
+</select>
+</div>
+      
 </div>
 
 
@@ -225,40 +236,42 @@
 
 
 
-<div class='form-group col-md-4'>
-<label for='entity_type'><b>Entity Type<font color='red'>*</font></b></label>
-<select required='true' class='form-control' id='entity_type' name='entity_type'  >
-<option value=''></option>
-</select>
-</div>
 
-<div class='form-group col-md-4'>
-<label for='entity_type_other'><b>Other Entity Type<font color='red'>*</font></b></label>
+
+<div  style="display:none;" class='form-group col-md-4 entity_type_other'>
+<label for='entity_type_other'><b>Other Entity Type</b></label>
 <input type='input' class='form-control' id='entity_type_other' name='entity_type_other'  placeholder='Enter Other Entity Type'/>
 </div>
 
+      
 <div class='form-group col-md-4'>
-<label for='costshare_obligation'><b>Cost Share Obligation<font color='red'>*</font></b></label>
-<select required='true' class='form-control' id='costshare_obligation' name='costshare_obligation'  >
-<option value=''></option>
-</select>
+<label for='costshare_obligation'><b>Cost Share Obligation <font color='orange'> (in % )</font><font color='red'>*</font></b></label>
+<input onkeypress='return numbers(event);' required="true" type="input" required='true' class='form-control' placeholder='eg 0.01' id='costshare_obligation' name='costshare_obligation'  />
+
 </div>
-</div>
-
-
-
-  <div class="form-row"> 
-
-
+      
+      
+      
 <div class='form-group col-md-4'>
 <label for='subaward_agreement_filename'><b>Sub Award Agreement File<font color='red'>*</font></b></label>
 <input required='true' type='file' class='form-control' id='subaward_agreement_filename' name='subaward_agreement_filename'  placeholder='Enter Sub Award Agreement File'/>
 </div>
-
+      
+    
+      
 <div class='form-group col-md-4'>
-<label for='subaward_budget_filename'><b>Sub Award Budget<font color='red'>*</font></b></label>
+<label for='subaward_budget_filename'><b>Sub Award Budget File<font color='red'>*</font></b></label>
 <input required='true' type='file' class='form-control' id='subaward_budget_filename' name='subaward_budget_filename'  placeholder='Enter Sub Award Budget'/>
 </div>
+      
+</div>
+
+
+
+  <div class="form-row"> 
+
+
+
 
 <div class='form-group col-md-4'>
 <label for='subrecipient_status'><b>Sub Recipient Status<font color='red'>*</font></b></label>
@@ -267,6 +280,13 @@
 </select>
 </div>
 
+      
+        <div class='form-group col-md-4'>
+                <label for='submit_frm'><b>.</b></label>
+         <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
+            
+         </div>
+      
 </div>
 
 
@@ -284,11 +304,7 @@
    
           
             
-            <div class='form-group col-md-4'>
-                <label for='submit_frm'><b>.</b></label>
-         <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
-            
-         </div>
+          
 </div>
  </form>
                  <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
@@ -348,16 +364,16 @@
     <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
     
     
-   <%if (session.getAttribute("preaward_response") != null) { %>
+   <%if (session.getAttribute("subrecipients_response") != null) { %>
    <script type="text/javascript"> 
                     
-                    var uju='<%=session.getAttribute("preaward_response")%>';
+                    var uju='<%=session.getAttribute("subrecipients_response")%>';
                     $('.ujumbe').html(uju);
                     $('.callalert').click();
                       
                     
                 </script> <%
-                session.removeAttribute("preaward_response");
+                session.removeAttribute("subrecipients_response");
                             }
 
     %>
@@ -506,7 +522,7 @@ $("#"+elementtoappend).html(""+dt);
     
 }
     
-  loadEdits('searchtable','applicants_details','loadedits','vw_applicants_details','table_id'); 
+  loadEdits('searchtable','subrecipient_infor','loadedits','vw_subrecipient_details','table_id'); 
   
   
   
@@ -603,8 +619,13 @@ for (const key in data[0])
     
 }
          
-     //loadSelectOptionsPerField('applicant_id','getapplicants',''); 
-     loadSelectOptionsPerField('recommendation','getrecomendations',''); 
+     loadSelectOptionsPerField('subrec_name','getQualifiedApplicants',''); 
+     loadSelectOptionsPerField('subaward_type','getsubawardtypes_subrecipients',''); 
+     loadSelectOptionsPerField('reportingcurrency','getcurrency',''); 
+     loadSelectOptionsPerField('reportingfrequency','getreportingfrequency',''); 
+     loadSelectOptionsPerField('applicable_indirectcost','getapplicableindirectcost',''); 
+     loadSelectOptionsPerField('entity_type','getentitytype',''); 
+     loadSelectOptionsPerField('subrecipient_status','getsubrecipientstatus',''); 
       
 
 
@@ -686,6 +707,17 @@ function autosum(sourceindics,dest){
     $("#"+dest).val(ttl);
 }
 
+
+function showHiddenElement(primeelement,ifvalueis,unhide_eleme){
+    
+    
+    var se=$("#"+primeelement).val();
+    
+    if(se===ifvalueis){ $("."+unhide_eleme).show(); } else{ $("."+unhide_eleme).hide();$("#"+unhide_eleme).val(""); }
+    
+    
+    
+}
 </script>    
 </body>
 </html>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Manage Applicants</title>
+	<title>Lop Budget</title>
 	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 11]>
@@ -19,12 +19,13 @@
         <!--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">-->
 	<!-- Favicon icon -->
         <link rel="icon" href="assets/images/grants.png" type="image/x-icon">
-        
+
 	<!-- vendor css -->
 	<link rel="stylesheet" href="assets/css/style.css">
 	 <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
 	  <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
-           <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
+          <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -88,15 +89,15 @@
 					<div class="card-body">
 						<ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Applicants</a>
+								<a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Update LOP Budget</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-uppercase" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View/Edit</a>
+								<a class="nav-link  text-uppercase" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">View/Edit</a>
 							</li>
 							
 						</ul>
 						<div class="tab-content" id="myTabContent">
-							<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+							<div class="tab-pane  show active " id="home" role="tabpanel" aria-labelledby="home-tab">
 								<p class="mb-0"> 
                                                                     <div class="card">
                     <div class="card-header">
@@ -107,11 +108,10 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="saveapplicants" enctype="multipart/form-data" method="POST">
+                                <form action="savesrlopbudget" >
                                     
-						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Add Applicants </b></h2>
-					
-                                    <div class="form-row">
+						<h2 class='btn btn-success' style='text-align: center; width:100%;'><b>Update Sub-recipient's LOP Budget</b></h2>
+				<div class="form-row">
                                         
                                         <%
                                             String uid="unknown";
@@ -135,26 +135,9 @@
 <input required="true" value="<%=dp.getRandNo(1,10000)%>" type='hidden' class='form-control' id='table_id' name='table_id'  placeholder='Enter id'/>
 <input required="true" value="<%=uid%>" type='hidden' class='form-control' id='user_id' name='user_id'  placeholder='User id'/>
                  
-                                    
- 
-
 <div class='form-group col-md-4'>
-<label for='solicitation_id'><b>Solicitation Reference<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='solicitation_id' name='solicitation_id'  >
-<option value=''></option>
-</select>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='organization_name'><b>Organization Name<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='organization_name' name='organization_name'  placeholder='Enter Organization Name'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='type_of_organization'><b>Type of Organization<font color='red'>*</font></b></label>
-<select class='form-control' id='type_of_organization' name='type_of_organization'  >
+<label for='subrec_id'><b>Sub Recipient Name<font color='red'>*</font></b><font color='orange'>Name/Nofo/Status/Obl. Dates</font></b></label>
+<select required='true' class='form-control' id='subrec_id' name='subrec_id'  >
 <option value=''></option>
 </select>
 </div>
@@ -164,163 +147,143 @@
 
 
 
-
-            </div>
-
-       
-  <div class="form-row">   
-
-
 <div class='form-group col-md-4'>
-<label for='postal_address'><b>Postal Address</b></label>
-<input   type='input' class='form-control' id='postal_address' name='postal_address'  placeholder='Enter Postal Address'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='email'><b>Email Address<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='email' name='email'  placeholder='Enter Email Address'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='phoneno'><b>Phone Number<font color='red'>*</font></b></label>
-<input required="true"  type='tel' class='form-control' id='phoneno' name='phoneno'  placeholder='Enter Phone Number'/>
-</div>
-
-
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='executive_name'><b>Executive Name<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='executive_name' name='executive_name'  placeholder='Enter Executive Name'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='executive_title'><b>Executive Title<font color='red'>*</font></b></label>
-<input required="true"  type='input' class='form-control' id='executive_title' name='executive_title'  placeholder='Enter Executive Title'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='has_registration_certificate'><b>Has Registration Certificate?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='has_registration_certificate' name='has_registration_certificate'  >
-<option value=''>Select Option</option>
-<option value='Yes'>Yes</option>
-<option value='No'>No</option>
-</select>
-</div>
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='nationality'><b>Nationality<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='nationality' name='nationality'  >
-<option value=''>Select Option</option>
-<option value='Kenya'>Kenya</option>
-<option value='Tanzania'>Tanzania</option>
-<option value='Uganda'>Uganda</option>
-<option value='US'>US</option>
+<label for='currently_active'><b>Partner Status<font color='red'>*</font></b></label>
+<select required='true' class='form-control' id='currently_active' name='currently_active'  >
+<option value=''></option>
 </select>
 </div>
 
 
 <div class='form-group col-md-4'>
-<label for='has_pin_certificate'><b>Has Pin Certificate?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='has_pin_certificate' name='has_pin_certificate'  >
-<option value=''>Select Option</option>
-<option value='Yes'>Yes</option>
-<option value='No'>No</option>
+<label for='update_no'><b>Update Number<font color='red'>*</font></b></label>
+<select required='true' class='form-control' id='update_no' name='update_no'  >
+<option value=''></option>
 </select>
 </div>
 
-
-<div class='form-group col-md-4'>
-<label for='pin_number'><b>Pin Number</b></label>
-<input   type='input' class='form-control' id='pin_number' name='pin_number'  placeholder='Enter Pin Number'/>
-</div>
-
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='is_tax_compliant'><b>Is Tax Compliant?<font color='red'>*</font></b></label>
-<select required="true"  class='form-control' id='is_tax_compliant' name='is_tax_compliant'  >
-<option value=''>Select Option</option>
-<option value='Yes'>Yes</option>
-<option value='No'>No</option>
-</select>
 </div>
 
 
-<div class='form-group col-md-4'>
-<label for='tax_compliant_certificate_file'><b>Upload Tax Compliant Certificate</b></label>
-<input   type='file' class='form-control' id='tax_compliant_certificate_file' name='tax_compliant_certificate_file'  placeholder='Enter Upload Tax Compliant Certificate'/>
-</div>
-
-
-<div class='form-group col-md-4'>
-<label for='universal_entity_number'><b></b>Universal Entity Identifier
-</label>
-<input   type='input' class='form-control' id='universal_entity_number' name='universal_entity_number'  placeholder='Enter '/>
-</div>
-
-</div>
-  <div class="form-row">  
-
-<div class='form-group col-md-4'>
-<label for='universal_entity_certificate_file'><b>Upload Universal entity Certificate</b></label>
-<input   type='file' class='form-control' id='universal_entity_certificate_file' name='universal_entity_certificate_file'  placeholder='Enter Upload Universal entity Certificate'/>
-</div>
-                     
-
-      
-      
-   
 
 
 
 
-<div class='form-group col-md-4'>
-<label for='pin_certificate_attachment_file'><b>Upload Pin Certificate Attachment</b></label>
-<input  type='file' class='form-control' id='pin_certificate_attachment_file' name='pin_certificate_attachment_file'  placeholder='Enter Upload Pin Certificate Attachment'/>
-</div>
-      
-      
-<div class='form-group col-md-4'>
-<label for='other_requirement_attachment_file'><b>Upload Other Attachments<font color="orange"> (to upload multiple files, zip them)</font></b></label>
-<input type='file' class='form-control' id='other_requirement_attachment_file' name='other_requirement_attachment_file'  placeholder='Enter Upload Other Required Attachments'/>
-</div>
 
-      
-      
 
-</div>
+
   <div class="form-row"> 
 
 
 
-         <div class='form-group col-md-4'>
-<label for='final_eligibility_status'><b>Is the Applicant Eligible?<font color='red'>*</font></b></label>
-<select required="true" class='form-control' id='final_eligibility_status' name='final_eligibility_status'  >
-<option value=''>Select Option</option>
-<option value='Eligible'>Eligible</option>
-<option value='Ineligible'>In eligible</option>
-</select>
-</div>
-    
 <div class='form-group col-md-4'>
-<label for='remarks'><b>Notes</b></label>
-<textarea rows="1"  class='form-control' maxlength="255" id='remarks' name='remarks'  placeholder='Enter applicant Notes'></textarea>
-</div>      
-            
-            <div class='form-group col-md-4'>
+<label for='salaries'><b>Salaries<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='salaries' name='salaries'  placeholder='Enter Salaries'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='fringe_benefits'><b>Fringe Benefits<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='fringe_benefits' name='fringe_benefits'  placeholder='Enter Fringe Benefits'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='equipment'><b>Equipment<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='equipment' name='equipment'  placeholder='Enter Equipment'/>
+</div>
+
+      
+</div>
+
+
+
+  <div class="form-row"> 
+
+
+
+
+
+<div class='form-group col-md-4'>
+<label for='travel'><b>Travel<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" onkemaxlength="10"ypress='return numbers(event);'  type='input' class='form-control' id='travel' name='travel'  placeholder='Enter Travel'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='supplies'><b>Supplies<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='supplies' name='supplies'  placeholder='Enter Supplies'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='other_direct_costs'><b>Other Direct Costs<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='other_direct_costs' name='other_direct_costs'  placeholder='Enter Other Direct Costs'/>
+</div>
+
+      
+</div>
+
+
+
+  <div class="form-row"> 
+
+
+
+
+<div class='form-group col-md-4'>
+<label for='indirect_costs'><b>Indirect Costs<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='indirect_costs' name='indirect_costs'  placeholder='Enter Indirect Costs'/>
+</div>
+
+<div class='form-group col-md-4'>
+<label for='implementation_budget'><b>Implementation Budget<font color='red'>*</font></b></label>
+<input onkeyup="autosum('salaries,fringe_benefits,equipment,travel,supplies,other_direct_costs,indirect_costs','implementation_budget');" maxlength="10" readonly="true" onkeypress='return numbers(event);'  type='input' class='form-control' id='implementation_budget' name='implementation_budget'  placeholder='Enter Implementation Budget'/>
+</div>
+
+
+<div class='form-group col-md-4'>
+<label for='cost_share'><b>Cost Share<font color='red'>*</font></b></label>
+<input  maxlength="10" onkeypress='return numbers(event);'  type='input' class='form-control' id='cost_share' name='cost_share'  placeholder='Enter Cost Share'/>
+</div>
+
+
+
+      
+</div>
+
+
+
+<div class="form-row"> 
+
+
+
+
+      
+        <div class='form-group col-md-4'>
                 <label for='submit_frm'><b>.</b></label>
          <button id="submit_frm" type="submit" class="btn  btn-primary btn-sm form-control">Submit</button>   
             
          </div>
+      
+</div>
+
+
+
+  
+
+
+
+ 
+  
+  <div class="form-row"> 
+
+
+
+   
+          
+            
+          
 </div>
  </form>
                  <div class="toast hide toast-3s" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
@@ -368,6 +331,7 @@
 
     <!-- Required Js -->
     <script src="assets/js/vendor-all.min.js"></script>
+    <!--<script src="assets/js/plugins/bootstrap.min.js"></script>-->
     <script src="assets/js/plugins/bootstrap.min.js"></script>
     <script src="assets/js/pcoded.min.js"></script>
 
@@ -375,22 +339,20 @@
    <script  src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
    <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script>
     
-   
+    <script type="text/javascript" src="assets/js/jquery.fileDownload.js"></script>
     <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
     
-    <script type="text/javascript" src="assets/js/jquery.fileDownload.js"></script>
     
-    
-   <%if (session.getAttribute("applicants_response") != null) { %>
+   <%if (session.getAttribute("subrecipientslopbudget_response") != null) { %>
    <script type="text/javascript"> 
                     
-                    var uju='<%=session.getAttribute("applicants_response")%>';
+                    var uju='<%=session.getAttribute("subrecipientslopbudget_response")%>';
                     $('.ujumbe').html(uju);
                     $('.callalert').click();
                       
                     
                 </script> <%
-                session.removeAttribute("applicants_response");
+                session.removeAttribute("subrecipientslopbudget_response");
                             }
 
     %>
@@ -499,7 +461,7 @@ $("#"+elementtoappend).html(""+dt);
               "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": true,responsive:true, 
+              "lengthChange": false,responsive: true,  
               "order": [[0,'desc']]});
  
 //    $('#searchtable_'+elementtoappend+' tbody').on( 'click', 'tr', function () {
@@ -539,7 +501,7 @@ $("#"+elementtoappend).html(""+dt);
     
 }
     
-  loadEdits('searchtable','applicants_details','loadedits','vw_applicants_details','table_id'); 
+  loadEdits('searchtable','subaward_lop_budget','loadedits','vw_subrecipient_lpo_bud','table_id'); 
   
   
   
@@ -549,7 +511,7 @@ $("#"+elementtoappend).html(""+dt);
     
     //once the edit form is clicked, the assumption is that the add section will be loaded
     $('#home-tab').click();
-    $('#home-tab').html("Edit Applicants");
+    $('#home-tab').html("Edit Assessments");
     
    
 //    console.log("_"+fc+"vs"+dt);
@@ -635,8 +597,15 @@ for (const key in data[0])
           
     
 }
-    loadSelectOptionsPerField('type_of_organization','getorgtypes','');       
-     loadSelectOptionsPerField('solicitation_id','getsolicitation',''); 
+         
+     loadSelectOptionsPerField('subrec_id','getACtiveQualifiedApplicants',''); 
+     loadSelectOptionsPerField('subaward_type','getsubawardtypes_subrecipients',''); 
+     loadSelectOptionsPerField('reportingcurrency','getcurrency',''); 
+     loadSelectOptionsPerField('reportingfrequency','getreportingfrequency',''); 
+     loadSelectOptionsPerField('applicable_indirectcost','getapplicableindirectcost',''); 
+     loadSelectOptionsPerField('entity_type','getentitytype',''); 
+     loadSelectOptionsPerField('currently_active','getsubrecipientstatus',''); 
+     loadSelectOptionsPerField('update_no','getmodificationnumber',''); 
       
 
 
@@ -702,6 +671,33 @@ function refreshPage(){
 }
 
 
+function autosum(sourceindics,dest){
+    
+    var elms=sourceindics.split(",");
+    
+    var ttl=0;
+    for(var x=0;x<elms.length;x++){
+    if($("#"+elms[x]).val()!=='')
+    {
+      ttl=ttl+parseInt($("#"+elms[x]).val()); 
+    }    
+        
+        
+    }
+    $("#"+dest).val(ttl);
+}
+
+
+function showHiddenElement(primeelement,ifvalueis,unhide_eleme){
+    
+    
+    var se=$("#"+primeelement).val();
+    
+    if(se===ifvalueis){ $("."+unhide_eleme).show(); } else{ $("."+unhide_eleme).hide();$("#"+unhide_eleme).val(""); }
+    
+    
+    
+}
 </script>    
 </body>
 </html>

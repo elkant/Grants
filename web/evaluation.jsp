@@ -249,7 +249,10 @@
 <input  type='file' class='form-control' id='response_to_applicant' name='response_to_applicant'  placeholder='Upload Response document to applicant'/>
 </div>
 
-   
+<div class='form-group col-md-4'>
+<label for='remarks'><b>Notes</b></label>
+<textarea rows="1"  class='form-control' id='remarks' name='remarks'  placeholder='Enter solicitation Notes'></textarea>
+</div>
           
             
             <div class='form-group col-md-4'>

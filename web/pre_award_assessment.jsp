@@ -147,7 +147,15 @@
 
 <div class='form-group col-md-4'>
 <label for='overall_risk_rating'><b>Overall Risk Rating<font color='red'>*</font></b></label>
-<input onkeypress='return numbers(event);'  type='input' class='form-control' id='overall_risk_rating' name='overall_risk_rating'  placeholder='Enter Overall Risk Rating'/>
+<select   type='input' class='form-control' id='overall_risk_rating' name='overall_risk_rating'  placeholder='Enter Overall Risk Rating'>
+    
+    <option value=''>Select Risk Rating</option>
+    <option value='0'>0</option>
+    <option value='1'>1</option>
+    <option value='2'>2</option>
+    <option value='3'>3</option>
+    <option value='4'>4</option>
+</select >
 </div>
 
 
@@ -413,7 +421,7 @@ $("#"+elementtoappend).html(""+dt);
     
 }
     
-  loadEdits('searchtable','applicants_details','loadedits','vw_applicants_details','table_id'); 
+  loadEdits('searchtable','applicants_details','loadedits','vw_selected_applicants','table_id'); 
   
   
   

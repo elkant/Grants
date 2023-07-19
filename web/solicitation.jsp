@@ -5,10 +5,7 @@
 	<title>Manage Grants</title>
 	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 11]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+	
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -145,6 +142,15 @@
     </select>
 </div>
 
+<div class='form-group col-md-4'>
+<label for='solicitatition_means'><b>Solicitation Means<font color='red'>*</font></b></label>
+<select onchange='hideNonCompetitiveFields();' class='form-control' id='solicitatition_means' name='solicitatition_means'  >
+<option value=''>Select Means</option>
+<option value='Competitive'>Competitive</option>
+<option value='Non Competitive'>Non Competitive</option>
+</select>
+</div>  
+
 
 <div class='form-group col-md-4'>
 <label for='nofo_number'><b>Solicitation Reference <font color='red'>*</font></b></label>
@@ -152,13 +158,16 @@
 </div>
 
 
-<div class='form-group col-md-4'>
-<label for='performance_start_date'><b>Performance Start Date<font color='red'>*</font></b></label>
-<input type='input' class='form-control tarehe' id='performance_start_date' name='performance_start_date'  placeholder='Enter Performance Start Date'/>
-</div>
+
 
             </div>
         <div class="form-row"> 
+            
+            
+<div class='form-group col-md-4'>
+<label for='performance_start_date'><b>Performance Start Date<font color='red'>*</font></b></label>
+<input type='input' class='form-control tarehe' id='performance_start_date' name='performance_start_date'  placeholder='Enter Performance Start Date'/>
+</div>            
 
 <div class='form-group col-md-4'>
 <label for='performance_end_date'><b>Performance End Date<font color='red'>*</font></b></label>
@@ -166,27 +175,31 @@
 </div>
 
 
-<div class='form-group col-md-4'>
+<div class='form-group col-md-4 date_of_issuance'>
 <label for='date_of_issuance'><b>Date of Issuance<font color='red'>*</font></b></label>
 <input type='input' class='form-control tarehe' id='date_of_issuance' name='date_of_issuance'  placeholder='Enter Date of Issuance'/>
 </div>
 
 
-<div class='form-group col-md-4'>
+  </div>
+        
+<div class="form-row"> 
+
+
+    
+    
+<div class='form-group col-md-4 submission_by_date'>
 <label for='submission_by_date'><b>Submission By Date<font color='red'>*</font></b></label>
 <input type='input' class='form-control tarehe_kesho' id='submission_by_date' name='submission_by_date'  placeholder='Enter Submission By Date'/>
 </div>
-  </div>
-        
-        <div class="form-row"> 
-
-<div class='form-group col-md-4'>
+    
+    
+    
+<div class='form-group col-md-4 means_of_submission'>    
 <label for='means_of_submission'><b>Means of Submission<font color='red'>*</font></b></label>
 <select class='form-control' id='means_of_submission' name='means_of_submission'  >
-
-    
-    <option value=''>Select Means</option>
-    </select>
+<option value=''>Select Means</option>
+</select>
 </div>
 
 
@@ -196,14 +209,26 @@
 </div>
 
 
-<div class='form-group col-md-4'>
-<label for='attachment_location'><b>Upload Documents <font color="orange">(to upload multiple files, zip them)</font><font color='red'>*</font></b></label>
-<input type='file' class='form-control' id='attachment_location' name='attachment_location'  placeholder='Enter Upload Documents'/>
-</div>
                      
                 </div>
-        <div class="form-row">                       
 
+<div class="form-row"> 
+    
+
+<div class='form-group col-md-4'>
+<label for='attachment_location'><b>Upload Documents <font color="orange">(to upload multiple files, zip them)</font><font color='red'>*</font></b></label>
+<input required type='file' class='form-control' id='attachment_location' name='attachment_location'  placeholder='Enter Upload Documents'/>
+</div>    
+    
+    
+   
+    
+    
+<div class='form-group col-md-4'>
+<label for='remarks'><b>Notes</b></label>
+<textarea rows="1"  class='form-control' id='remarks' name='remarks'  placeholder='Enter solicitation Notes'></textarea>
+</div>
+            
           
             
             <div class='form-group col-md-4'>
@@ -476,6 +501,7 @@ for (const key in data[0])
  }
   
 }
+hideNonCompetitiveFields();
                     }  
 //});
                         
@@ -588,6 +614,41 @@ function refreshPage(){
     
 }
 
+function hideNonCompetitiveFields()
+{
+    
+ var sm=$("#solicitatition_means").val();
+ 
+ if(sm==='Non Competitive')
+ {
+$('#date_of_issuance').attr('required',false);
+$('#submission_by_date').attr('required',false);
+$('#means_of_submission').attr('required',false);
+$(".date_of_issuance").hide();
+$(".means_of_submission").hide();
+$(".submission_by_date").hide();
+$("#date_of_issuance").val("");
+$("#means_of_submission").val("");
+$("#submission_by_date").val("");
+
+        }
+
+else {
+           
+         $('#submission_by_date').attr('required',true);
+         $('#means_of_submission').attr('required',true);
+         $('#date_of_issuance').attr('required',true);
+
+$(".date_of_issuance").show();
+$(".means_of_submission").show();
+$(".submission_by_date").show();   
+            
+             }
+    
+}
+$(document).ready(function(){
+hideNonCompetitiveFields();
+});
 
 </script>    
 </body>

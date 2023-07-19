@@ -163,6 +163,67 @@
 					
 				</div>
 			</div>
+                        
+                        
+                        <div class="col-xl-12">
+                            <div class="row">
+                                 <div class="col-sm-12 col-md-4">
+						<h5>LOP Budget</h5>
+						<hr>
+						<div class="card text-left">
+							<div class="card-body">
+								<h5 class="card-title">Manage Sub-recipients Life of Project (LOP) Budget</h5>
+								<p class="card-text">Here we are updating the sub-recipient life of projects details from the already existing data captured on Applicants section. Here you can add, edit or delete sub-recipients details</p>
+								<br/>						
+								<br/>
+								
+                                                                <a href="subrecipients_lop_budget.jsp" class="btn  btn-primary">Manage Sub-recipient LOP budget</a>
+								
+							</div>
+						</div>
+					</div> 
+                                
+                            
+                                 <div class="col-sm-12 col-md-4">
+						<h5>Obligated Budget</h5>
+						<hr>
+						<div class="card text-left">
+							<div class="card-body">
+								<h5 class="card-title">Manage Sub-recipients Obligated Budget</h5>
+								<p class="card-text">Here we are updating the sub-recipient Obligated budget from the already existing data captured on Applicants. Here you can add, edit or delete sub-recipients Obligated budget details</p>
+								<br/>						
+								<br/>
+								
+                                                                <a href="obligated_budget.jsp" class="btn  btn-primary">Manage Sub-recipient Obligated budget</a>
+								
+							</div>
+						</div>
+				</div> 
+                                
+                                
+                                
+                                <div class="col-sm-12 col-md-4">
+						<h5>Modifications</h5>
+						<hr>
+						<div class="card text-left">
+							<div class="card-body">
+								<h5 class="card-title">Manage Sub-recipients Modifications</h5>
+								<p class="card-text">Here we are updating the sub-recipient Modifications from the already existing data captured on Applicants. Here you can add, edit or delete sub-recipients modification details</p>
+								<br/>						
+								<br/>
+								
+                                                                <a href="modifications.jsp" class="btn  btn-primary">Manage Sub-recipient Modifications</a>
+								
+							</div>
+						</div>
+				</div> 
+                                
+                                
+                            </div>
+                            
+                            
+                            </div>
+                        
 			<!-- [ card ] end -->
 		</div>
 		<!-- [ Main Content ] end -->

@@ -67,7 +67,7 @@ public class saveevaluation extends HttpServlet {
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","applicate_id","technical_evaluation_score","mne_evaluation_score","finance_evaluation_score","other_evaluation_score","overall_score","technical_evaluation_attachment","mne_evaluation_attachment","finance_evaluation_attachment","other_evaluation_attachment","is_applicant_selected","post_evaluation_minutes","user_id","response_to_applicant"};
+            String[] dataelementsarr = {"table_id","applicate_id","technical_evaluation_score","mne_evaluation_score","finance_evaluation_score","other_evaluation_score","overall_score","technical_evaluation_attachment","mne_evaluation_attachment","finance_evaluation_attachment","other_evaluation_attachment","is_applicant_selected","post_evaluation_minutes","user_id","response_to_applicant","remarks"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
       

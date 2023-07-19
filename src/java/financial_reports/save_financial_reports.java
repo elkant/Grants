@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package applicants;
+package financial_reports;
 
 import Ajax.AuditTrail;
 import General.copytemplates;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class saveapplicants extends HttpServlet {
+public class save_financial_reports extends HttpServlet {
     
  
     
@@ -63,17 +63,13 @@ public class saveapplicants extends HttpServlet {
             
             copytemplates ct= new copytemplates();
             
-            String table = " grants.applicants_details ";
+            String table = " grants.financial_reports ";
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","solicitation_id","organization_name","type_of_organization","postal_address","email","phoneno","executive_name","executive_title","has_registration_certificate","nationality","has_pin_certificate","pin_number","is_tax_compliant","tax_compliant_certificate_file","universal_entity_number","universal_entity_certificate_file","final_eligibility_status","pin_certificate_attachment_file","other_requirement_attachment_file","user_id","remarks"};
+            String[] dataelementsarr = {"table_id","subrec_id","salaries","fringe_benefits","equipment","travel","supplies","other_direct_costs","indirect_costs","total_aggregate_expenses","cost_share","yearmonth","date_report_received","remarks","user_id","current_period_receipts","attachment_location"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
-      
-            
-                      
-            
             
             
             try  {
@@ -125,11 +121,11 @@ public class saveapplicants extends HttpServlet {
 
             }
 
-   
+                System.out.println(""+conn.pst1);
 //______________________________________________________________________________________
             if (conn.pst1.executeUpdate() == 1) {
-                out.println("Applicants Data Saved Successfully");
-saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
+                out.println("Subrecipient Financial Report Data Saved Successfully");
+saveresponse="<font color=\"green\">Subrecipient Financial Data Saved Successfully</font>";
                 
 
                 if (ses.getAttribute("kd_session") != null) {
@@ -139,25 +135,26 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
                     hm = (HashMap<String, String>) ses.getAttribute("kd_session");
 
                     AuditTrail ad = new AuditTrail();
-                    ad.addTrail(conn, hm, "Saved Applicants Named"
-                            + " " + request.getParameter("organization_name"));
+                    ad.addTrail(conn, hm, "Saved Subrecipient Named"
+                            + " " + request.getParameter("subrec_id"));
 
                 }
 
             } else {
-               saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
+               saveresponse="<font color=\"green\">Subrecipient Financial Reports Data Saved Successfully</font>";
                 out.println(" Data Not successfully saved ");
 
             }
             
             //Below two fields must be equalin terms of length
-           String uploadinputfields[]={"tax_compliant_certificate_file","universal_entity_certificate_file","pin_certificate_attachment_file","other_requirement_attachment_file"};
-           String FileNames[]={"TCC","UEC","PIN","Others"};
+           String uploadinputfields[]={"attachment_location","current_period_receipts"};
+           String FileNames[]={"OTR","CPR"};
     //_________________________________________________________________Transfer File into a Folder______________________________________________________        
             
               String filename="";
         
-        if(request.getParameter("organization_name")!=null)
+        if(request.getParameter("subrec_id")!=null)
+      //  if(1==2)
         {     
             
             //String ,String attachmentcolname, String filename,String tableid,String tableidvalue
@@ -172,8 +169,8 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
             hm.put("tableid",dataelementsarr[0]);
             hm.put("tableidvalue",request.getParameter(dataelementsarr[0]));
             
-            filename=request.getParameter("organization_name")+"_"+FileNames[a]+"_";
-            String pathname=ct.uploadFile(request, filename,"Applicants");
+            filename=request.getParameter("subrec_id")+"_"+request.getParameter("yearmonth")+"_"+FileNames[a]+"_";
+            String pathname=ct.uploadFile(request, filename,"Financial_reports");
             
             hm.put("filename",pathname);
             System.out.println(updateFileName(conn, hm));
@@ -205,13 +202,13 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
 
         } catch (SQLException ex) {
             
-            saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
-            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
+           // saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
+            Logger.getLogger(save_financial_reports.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        ses.setAttribute("applicants_response",saveresponse);
-        response.sendRedirect("applicants.jsp");
+        ses.setAttribute("subrecipientsfinance_response",saveresponse);
+        response.sendRedirect("financial_reports.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -282,7 +279,7 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
             
         } catch (SQLException ex) {
               status="Error while updating file"+ex;
-            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(save_financial_reports.class.getName()).log(Level.SEVERE, null, ex);
         }
       return status;
     

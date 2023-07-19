@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package applicants;
+package subrecipient;
 
 import Ajax.AuditTrail;
 import General.copytemplates;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class saveapplicants extends HttpServlet {
+public class savesubrecipient extends HttpServlet {
     
  
     
@@ -63,11 +63,11 @@ public class saveapplicants extends HttpServlet {
             
             copytemplates ct= new copytemplates();
             
-            String table = " grants.applicants_details ";
+            String table = " grants.subrecipient_infor ";
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","solicitation_id","organization_name","type_of_organization","postal_address","email","phoneno","executive_name","executive_title","has_registration_certificate","nationality","has_pin_certificate","pin_number","is_tax_compliant","tax_compliant_certificate_file","universal_entity_number","universal_entity_certificate_file","final_eligibility_status","pin_certificate_attachment_file","other_requirement_attachment_file","user_id","remarks"};
+            String[] dataelementsarr = {"table_id","subrec_name","subaward_number","subaward_type","subaward_type_other","subaward_startdate","subaward_enddate","reportingcurrency","reportingfrequency","applicable_indirectcost","entity_type","entity_type_other","costshare_obligation","subaward_agreement_filename","subaward_budget_filename","subrecipient_status","user_id"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
       
@@ -128,8 +128,8 @@ public class saveapplicants extends HttpServlet {
    
 //______________________________________________________________________________________
             if (conn.pst1.executeUpdate() == 1) {
-                out.println("Applicants Data Saved Successfully");
-saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
+                out.println("Subrecipient Data Saved Successfully");
+saveresponse="<font color=\"green\">Subrecipient Data Saved Successfully</font>";
                 
 
                 if (ses.getAttribute("kd_session") != null) {
@@ -139,25 +139,25 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
                     hm = (HashMap<String, String>) ses.getAttribute("kd_session");
 
                     AuditTrail ad = new AuditTrail();
-                    ad.addTrail(conn, hm, "Saved Applicants Named"
-                            + " " + request.getParameter("organization_name"));
+                    ad.addTrail(conn, hm, "Saved Subrecipient Named"
+                            + " " + request.getParameter("subrec_name"));
 
                 }
 
             } else {
-               saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
+               saveresponse="<font color=\"green\">Subrecipient Data Saved Successfully</font>";
                 out.println(" Data Not successfully saved ");
 
             }
             
             //Below two fields must be equalin terms of length
-           String uploadinputfields[]={"tax_compliant_certificate_file","universal_entity_certificate_file","pin_certificate_attachment_file","other_requirement_attachment_file"};
-           String FileNames[]={"TCC","UEC","PIN","Others"};
+           String uploadinputfields[]={"subaward_agreement_filename","subaward_budget_filename"};
+           String FileNames[]={"SAA","SAB"};
     //_________________________________________________________________Transfer File into a Folder______________________________________________________        
             
               String filename="";
         
-        if(request.getParameter("organization_name")!=null)
+        if(request.getParameter("subrec_name")!=null)
         {     
             
             //String ,String attachmentcolname, String filename,String tableid,String tableidvalue
@@ -172,8 +172,8 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
             hm.put("tableid",dataelementsarr[0]);
             hm.put("tableidvalue",request.getParameter(dataelementsarr[0]));
             
-            filename=request.getParameter("organization_name")+"_"+FileNames[a]+"_";
-            String pathname=ct.uploadFile(request, filename,"Applicants");
+            filename=request.getParameter("subrec_name")+"_"+FileNames[a]+"_";
+            String pathname=ct.uploadFile(request, filename,"Subrecipients");
             
             hm.put("filename",pathname);
             System.out.println(updateFileName(conn, hm));
@@ -206,12 +206,12 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
         } catch (SQLException ex) {
             
             saveresponse="<font color=\"red\">Data Not successfully saved </font>"+ex;
-            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(savesubrecipient.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        ses.setAttribute("applicants_response",saveresponse);
-        response.sendRedirect("applicants.jsp");
+        ses.setAttribute("subrecipients_response",saveresponse);
+        response.sendRedirect("subrecipients.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -282,7 +282,7 @@ saveresponse="<font color=\"green\">Applicants Data Saved Successfully</font>";
             
         } catch (SQLException ex) {
               status="Error while updating file"+ex;
-            Logger.getLogger(saveapplicants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(savesubrecipient.class.getName()).log(Level.SEVERE, null, ex);
         }
       return status;
     

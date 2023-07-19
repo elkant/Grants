@@ -67,13 +67,10 @@ public class savesolicitaion extends HttpServlet {
 
            
 //____Note, The table id should always come first so that the table id is pulled automatically on the hashmap 
-            String[] dataelementsarr = {"table_id","grant_id","nofo_number","performance_start_date","performance_end_date","award_mechanism","date_of_issuance","submission_by_date","means_of_submission","attachment_name","attachment_location","user_id"};
+            String[] dataelementsarr = {"table_id","grant_id","nofo_number","performance_start_date","performance_end_date","award_mechanism","date_of_issuance","submission_by_date","means_of_submission","attachment_name","attachment_location","user_id","solicitatition_means","remarks"};
             //String[] orgunitsarr= {"county","`sub-county`"}; 
 
-      
-            
-                      
-            
+        
             
             
             try  {

@@ -110,10 +110,42 @@ public class dataPulls extends HttpServlet {
             
             
             
-            if(act.equals("getCurency"))
+            if(act.equals("getcurrency"))
             {               
                 
-               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select * from grants.opts_currency; ");
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(code,',',currency) as rcd from grants.opts_currency where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("getreportingfrequency"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',reportingfrequency) as rcd from grants.opts_reportingfrequency where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("getapplicableindirectcost"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',cost) as rcd from grants.opts_applicable_indirect_cost where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("getentitytype"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',entitytype) as rcd from grants.opts_entitytype where active=1; ");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+            if(act.equals("getsubrecipientstatus"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',status) as rcd from grants.opts_subrecipientstatus where active=1; ");
 
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
@@ -185,12 +217,68 @@ public class dataPulls extends HttpServlet {
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
     
             }
+              if(act.equals("getQualifiedApplicants"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(ad.table_id,',',organization_name,'/',nofo_number,' [',performance_start_date,' to ',performance_end_date,']')  as applicant from  "
+                       + "`applicants_details` ad  JOIN `solicitation_infor` `si` ON `si`.`table_id` = ad.`solicitation_id`  "
+                       + " JOIN `evaluation_details` `ed` ON `ed`.`applicate_id` = ad.`table_id` "
+                       + " WHERE        `ed`.`is_applicant_selected` = 'Yes'");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+              if(act.equals("getACtiveQualifiedApplicants"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(ad.table_id,',',organization_name,'/',nofo_number,'/',subrecipient_status,' [',performance_start_date,' to ',performance_end_date,']')  as applicant from  "
+                       + "`applicants_details` ad  JOIN `solicitation_infor` `si` ON `si`.`table_id` = ad.`solicitation_id`  "
+                       + " JOIN `evaluation_details` `ed` ON `ed`.`applicate_id` = ad.`table_id` "
+                       + " JOIN `subrecipient_infor` `sr` ON `sr`.`subrec_name` = ad.`table_id` "
+                       + " WHERE        `ed`.`is_applicant_selected` = 'Yes'");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
               if(act.equals("getrecomendations"))
             {               
                 
                ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',recommendation) as recommends from grants.opts_recommendation");
 
                 out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+              if(act.equals("getmodificationnumber"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',modification_number) as recommends from grants.opts_modification_number order by orodha asc");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+              
+                 if(act.equals("getsubawardtypes_grants"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',type) as recommends from grants.opts_subaward_type where active=1  and category='grants'");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+                 
+                      if(act.equals("getsubawardtypes_subrecipients"))
+            {               
+                
+               ResultSet rs1=pullDataFromDbGivenQuery(conn,"select concat(id,',',type) as recommends from grants.opts_subaward_type where active=1 and category='subrecipient'");
+
+                out.println(buildoptsFromDbResultSet(rs1,""));                                               
+    
+            }
+                      if(act.equals("getyearmonths"))
+            {               
+                
+              
+                out.println(getYearMonths(conn));                                               
     
             }
             
@@ -278,10 +366,10 @@ return conn.rs;
 String qry=qr;
 
     System.out.println("_called_query:"+qry);
-conn.rs=conn.st.executeQuery(qry);
+conn.rs4=conn.st4.executeQuery(qry);
 
 
-return conn.rs;
+return conn.rs4;
 
 }
     
@@ -521,4 +609,40 @@ public String deleteRow(dbConnweb con, String rowid,String primarykeycolumn, Str
         
          return status;
 }
+
+
+
+         public JSONObject getYearMonths(dbConnweb conn) throws SQLException{
+    
+        JSONArray armain = new JSONArray();
+        JSONObject jomain = new JSONObject();
+        
+        
+             IdGenerator ig= new IdGenerator();
+        
+        
+        String qry="select * from yearmonth where id <="+ig.CurrentYearMonth()+" order by id desc limit 12";
+        
+             System.out.println(qry);
+        
+        conn.rs= conn.st.executeQuery(qry);
+        
+        while(conn.rs.next()){
+            
+          JSONObject jo = new JSONObject();
+            jo.put("id", conn.rs.getString("id"));
+            jo.put("year", conn.rs.getString("year"));
+            jo.put("month", conn.rs.getString("month"));
+          
+        armain.put(jo);
+        }
+        
+    jomain.put("periods",armain);
+        
+    return jomain;
+    
+    }
+    
+
+
 }

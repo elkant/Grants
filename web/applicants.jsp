@@ -185,7 +185,7 @@
 
 <div class='form-group col-md-4'>
 <label for='phoneno'><b>Phone Number<font color='red'>*</font></b></label>
-<input required="true"  type='tel' class='form-control' id='phoneno' name='phoneno'  placeholder='Enter Phone Number'/>
+<input pattern="/(0)\d{10}/" required="true"  type='tel' class='form-control' id='phoneno' name='phoneno'  placeholder='0711xxx676'/>
 </div>
 
 

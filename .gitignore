@@ -23,3 +23,8 @@
 hs_err_pid*
 replay_pid*
 /dist/
+src/java/database/dbConnweb.java
+/build
+/build
+/build
+/build/web
